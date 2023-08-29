@@ -1,0 +1,3 @@
+[submodule "modules/authentik-config"]
+	path = modules/authentik-config
+	url = git@git.computational.bio.uni-giessen.de:jhaas/authentik-config.git
