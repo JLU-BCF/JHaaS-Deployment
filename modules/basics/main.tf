@@ -12,25 +12,34 @@ provider "kubectl" {
   config_path = var.kubeconfig
 }
 
+locals {
+  cm_issuer_secret_name = "${var.cm_issuer}-private-key"
+}
+
+
 # deploy cert manager and create an issuer
-## also creates namespace "cert-manager"
+## also creates namespace
 module "cert_manager" {
   source        = "terraform-iaac/cert-manager/kubernetes"
 
   cluster_issuer_email                   = var.issuer_email
-  cluster_issuer_name                    = "cert-manager-cluster-issuer"
-  cluster_issuer_private_key_secret_name = "cert-manager-cluster-issuer-private-key"
+  cluster_issuer_name                    = var.cm_issuer
+  cluster_issuer_private_key_secret_name = local.cm_issuer_secret_name
+
+  create_namespace = true
+  namespace_name = var.cm_namespace
 }
 
 # deploy nginx ingress controller
-## also creates namespace "nginx-ingress"
+## also creates namespace
 module "nginx-controller" {
   source  = "terraform-iaac/nginx-controller/helm"
 
-  create_namespace = true
   controller_kind = "Deployment"
-  namespace = "nginx-ingress"
   define_nodePorts = false
 
   additional_set = []
+
+  create_namespace = true
+  namespace = var.ingress_namespace
 }
