@@ -1,33 +1,37 @@
-provider "random" {}
+module "basics" {
+  source = "./modules/basics"
 
-# Create random secret key for authentik
-resource "random_password" "authentik_secret" {
-  length           = 50
-  special          = false
-}
+  kubeconfig = var.kubeconfig
 
-# Create random api token for authentik akadmin
-resource "random_password" "authentik_token" {
-  length           = 60
-  special          = false
-}
+  deploy_cert_manager = var.deploy_cert_manager
+  cm_issuer_email     = var.cm_issuer_email
+  cm_namespace        = var.cm_namespace
+  cm_issuer           = var.cm_issuer
 
-# Create random password for authentik akadmin
-resource "random_password" "authentik_password" {
-  length           = 20
-  special          = false
-}
+  deploy_nginx_ingress_controller = var.deploy_nginx_ingress_controller
+  ingress_namespace               = var.ingress_namespace
 
-# Create random user for postgres DB
-resource "random_pet" "db_user" {
-  # length is in words
-  length = 1
-}
+  deploy_postgres     = var.deploy_postgres
+  postgres_namespace  = var.postgres_namespace
+  postgres_name       = var.postgres_name
+  jhaas_db_user       = var.jhaas_db_user
+  jhaas_db_pass       = random_password.jhaas_db_pass.result
+  jhaas_db_name       = var.jhaas_db_name
+  authentik_db_user   = var.authentik_db_user
+  authentik_db_pass   = random_password.authentik_db_pass.result
+  authentik_db_name   = var.authentik_db_name
 
-# Create random password for postgres DB
-resource "random_password" "db_pass" {
-  length           = 32
-  special          = false
+  deploy_redis    = var.deploy_redis
+  redis_namespace = var.redis_namespace
+  redis_name      = var.redis_name
+  redis_pass      = random_password.redis_pass.result
+
+  deploy_minio    = var.deploy_minio
+  minio_namespace = var.minio_namespace
+  minio_name      = var.minio_name
+  minio_user      = random_pet.minio_user.id
+  minio_pass      = random_password.minio_pass
+  minio_buckets   = var.minio_buckets
 }
 
 module "authentik-deploy" {

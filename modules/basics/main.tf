@@ -24,7 +24,7 @@ module "cert_manager" {
 
   source        = "terraform-iaac/cert-manager/kubernetes"
 
-  cluster_issuer_email                   = var.issuer_email
+  cluster_issuer_email                   = var.cm_issuer_email
   cluster_issuer_name                    = var.cm_issuer
   cluster_issuer_private_key_secret_name = local.cm_issuer_secret_name
 
@@ -145,7 +145,7 @@ resource "helm_release" "minio" {
       fullnameOverride = var.minio_name,
       auth = {
         rootUser = var.minio_user,
-        rootPassword = var.minio_password
+        rootPassword = var.minio_pass
       },
       defaultBuckets = var.minio_buckets
     }

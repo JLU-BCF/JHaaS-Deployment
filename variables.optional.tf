@@ -1,11 +1,4 @@
 ###############
-# COMMON
-###############
-variable "kubeconfig" {
-  description = "Kubernetes configuration file to use"
-}
-
-###############
 # CERT-MANAGER
 ###############
 variable "deploy_cert_manager" {
@@ -13,19 +6,14 @@ variable "deploy_cert_manager" {
   default = true
 }
 
-variable "cm_issuer_email" {
-  description = "email address to use for certmanager issuer"
-  default = null
-}
-
 variable "cm_namespace" {
-  description = "Namespace to be used for cert-manager"
-  default = "cert-manager"
+    description = "Namespace to be used for cert-manager"
+    default = "cert-manager"
 }
 
 variable "cm_issuer" {
-  description = "Name for the default cert-manager cluster issuer"
-  default = "cluster-issuer"
+    description = "Name for the default cert-manager cluster issuer"
+    default = "cluster-issuer"
 }
 
 ###############
@@ -37,8 +25,8 @@ variable "deploy_nginx_ingress_controller" {
 }
 
 variable "ingress_namespace" {
-  description = "Namespace for nginx ingress"
-  default = "nginx-ingress"
+    description = "Namespace for nginx ingress"
+    default = "nginx-ingress"
 }
 
 ###############
@@ -50,8 +38,8 @@ variable "deploy_postgres" {
 }
 
 variable "postgres_namespace" {
-  description = "Namespace to be used for postgres"
-  default = "postgres"
+    description = "Namespace to be used for postgres"
+    default = "postgres"
 }
 
 variable "postgres_name" {
@@ -64,10 +52,6 @@ variable "jhaas_db_user" {
   default = "jhaas"
 }
 
-variable "jhaas_db_pass" {
-  description = "value"
-}
-
 variable "jhaas_db_name" {
   description = "value"
   default = "jhaas"
@@ -76,10 +60,6 @@ variable "jhaas_db_name" {
 variable "authentik_db_user" {
   description = "value"
   default = "authentik"
-}
-
-variable "authentik_db_pass" {
-  description = "value"
 }
 
 variable "authentik_db_name" {
@@ -105,10 +85,6 @@ variable "redis_name" {
   default = "redis"
 }
 
-variable "redis_pass" {
-  description = "value"
-}
-
 ###############
 # MINIO
 ###############
@@ -125,14 +101,6 @@ variable "minio_namespace" {
 variable "minio_name" {
   description = "value"
   default = "minio"
-}
-
-variable "minio_user" {
-  description = "value"
-}
-
-variable "minio_pass" {
-  description = "value"
 }
 
 variable "minio_buckets" {
