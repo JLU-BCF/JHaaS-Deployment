@@ -110,3 +110,36 @@ variable "redis_pass" {
   description = "value"
   default = "to-be-generated"
 }
+
+###############
+# MINIO
+###############
+variable "deploy_minio" {
+  description = "value"
+  default = true
+}
+
+variable "minio_namespace" {
+  description = "value"
+  default = "minio"
+}
+
+variable "minio_name" {
+  description = "value"
+  default = "minio"
+}
+
+variable "minio_user" {
+  description = "value"
+  default = "to-be-generated"
+}
+
+variable "minio_password" {
+  description = "value"
+  default = "to-be-generated"
+}
+
+variable "minio_buckets" {
+  description = "comma-seperated list of buckets"
+  default = "tf-state,jh-specs"
+}

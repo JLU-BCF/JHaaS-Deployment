@@ -125,3 +125,29 @@ resource "helm_release" "redis" {
     }
   )]
 }
+
+# deploy minio
+## also creates namespace
+resource "helm_release" "minio" {
+  count = var.deploy_minio == true ? 1 : 0
+
+  name       = var.minio_name
+
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "minio"
+  # version    = "2023.8.1"
+
+  create_namespace = true
+  namespace = var.minio_namespace
+
+  values = [yamlencode(
+    {
+      fullnameOverride = var.minio_name,
+      auth = {
+        rootUser = var.minio_user,
+        rootPassword = var.minio_password
+      },
+      defaultBuckets = var.minio_buckets
+    }
+  )]
+}
