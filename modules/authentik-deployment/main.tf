@@ -5,22 +5,26 @@ provider "helm" {
 }
 
 provider "kubernetes" {
-  config_path    = var.kubeconfig
+  config_path = var.kubeconfig
 }
 
-# Create k8s namespace to deploy authentik in
-resource "kubernetes_namespace" "authentik" {
-  metadata {
-    name = "authentik"
-  }
+provider "kubectl" {
+  config_path = var.kubeconfig
+}
+
+locals {
+  authentik_tls_secret_name = "${var.authentik_name}-tls-secret"
 }
 
 resource "helm_release" "authentik" {
-  name       = "authentik"
+  name       = var.authentik_name
 
   repository = "https://charts.goauthentik.io"
   chart      = "authentik"
-  version    = "2023.8.1"
+  # version    = "2023.8.1"
+
+  create_namespace = true
+  namespace = var.authentik_namespace
 
   values = [yamlencode(
     {
@@ -29,26 +33,26 @@ resource "helm_release" "authentik" {
         error_reporting = {
           enabled = false
         },
-        log_level = "info",
+        log_level = var.authentik_log_level,
         postgresql = {
-          host = "authentik",
-          name = "authentik",
-          password = "test",
-          port = 5432
-          user = "authentik",
+          host = var.postgres_host,
+          port = var.postgres_port
+          name = var.authentik_db_name,
+          user = var.authentik_db_user,
+          password = var.authentik_db_pass,
         },
         redis = {
-          host = "redis",
-          password = ""
+          host = var.redis_host,
+          password = var.redis_pass
         },
         email = {
-          from = "",
-          host = "",
-          password = "",
-          port = 587,
-          use_ssl = false,
-          use_tls = false,
-          username = ""
+          from = var.authentik_mail_from,
+          host = var.authentik_mail_host,
+          password = var.authentik_mail_password,
+          port = var.authentik_mail_port,
+          use_ssl = var.authentik_mail_use_ssl,
+          use_tls = var.authentik_mail_use_tls,
+          username = var.authentik_mail_username
         }
       },
       postgresql = {
@@ -60,12 +64,18 @@ resource "helm_release" "authentik" {
       ingress = {
         annotations = {
           "kubernetes.io/tls-acme" = "true",
-          "cert-manager.io/cluster-issuer" = "cluster-issuer"
+          "cert-manager.io/cluster-issuer" = var.cm_issuer
         },
         enabled = true,
+        env = {
+          AUTHENTIK_BOOTSTRAP_EMAIL = var.authentik_bootstrap_mail,
+          AUTHENTIK_BOOTSTRAP_PASSWORD = var.authentik_bootstrap_pass,
+          AUTHENTIK_BOOTSTRAP_TOKEN = var.authentik_bootstrap_token,
+          AUTHENTIK_REDIS__DB = 1
+        },
         hosts = [
           {
-            host = "authentik.jhaas.gi.denbi.de",
+            host = var.authentik_fqdn,
             paths = [
               {
                 path = "/",
@@ -77,26 +87,23 @@ resource "helm_release" "authentik" {
         ingressClassName = "nginx",
         tls = [
           {
-            hosts = ["authentik.jhaas.gi.denbi.de"],
-            secretName: "authentik-tls-secret"
+            hosts = [var.authentik_fqdn],
+            secretName: local.authentik_tls_secret_name
           }
         ]
       },
       volumeMounts = [
         {
-          name = "blueprints-default-override",
+          name = var.authentik_blueprints_override_name,
           mountPath = "/blueprints/default"
         }
       ],
       volumes = [
         {
-          name = "blueprints-default-override",
+          name = var.authentik_blueprints_override_name,
           emptyDir = {}
         }
       ]
-
-    ######################
-
     }
   )]
 

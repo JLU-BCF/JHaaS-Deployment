@@ -2,7 +2,8 @@
 # COMMON
 ###############
 variable "kubeconfig" {
-    description = "Kubernetes configuration file to use"
+  description = "Kubernetes configuration file to use"
+  default = "~/.kube/config"
 }
 
 ###############

@@ -1,70 +1,142 @@
 ######################
-# Deployment configuration
+# General
 ######################
 variable "kubeconfig" {
   description = "Kubernetes configuration file to use"
   default = "~/.kube/config"
 }
 
-# variable "k8s_namespace" {
-#   description = "The kubernetes namespace to deploy authentik in"
-#   default = "jhaas-authentik"
-# }
-# variable "release_name" {
-#   description = "The release name for the helm deployment"
-#   default = "jhaas-authentik"
-# }
+variable "authentik_name" {
+  description = "value"
+  default = "authentik"
+}
+
+variable "authentik_name" {
+  description = "value"
+  default = "authentik"
+}
+
+variable "authentik_fqdn" {
+  description = "value"
+  default = "authentik.jhaas.gi.denbi.de"
+}
 
 ######################
-# Authentik configuration
+# Authentik
 ######################
-
-# variable "authentik_version" {
-#   description = "Authentik version, used as chart version and image tag"
-# }
-# variable "authentik_hostname" {
-#   description = "Hostname under which authentik will be deployed"
-# }
-# variable "authentik_email" {
-#   description = "Email address injected as email address for akadmin"
-# }
+variable "authentik_log_level" {
+  description = "value"
+  default = "info"
+}
 
 variable "authentik_secret" {
   description = "The authentik secret to sign cookies and do other stuff"
 }
-# variable "authentik_token" {
-#   description = "API token injected as token for akadmin"
-# }
-# variable "authentik_password" {
-#   description = "Password injected as password for akadmin"
-# }
 
+variable "authentik_bootstrap_mail" {
+  description = "value"
+  default = ""
+}
+
+variable "authentik_bootstrap_pass" {
+  description = "value"
+  default = ""
+}
+
+variable "authentik_bootstrap_token" {
+  description = "value"
+  default = ""
+}
+
+variable "authentik_blueprints_override_name" {
+  description = "value"
+  default = "authentik-blueprints-override"
+}
 
 ######################
-# Database configuration
+# Database
+######################
+variable "postgres_host" {
+  description = "value"
+  default = "postgres.postgres"
+}
+
+variable "postgres_port" {
+  description = "value"
+  default = 5432
+}
+
+variable "authentik_db_name" {
+  description = "value"
+  default = "authentik"
+}
+
+variable "authentik_db_user" {
+  description = "value"
+  default = "authentik"
+}
+
+variable "authentik_db_pass" {
+  description = "value"
+  default = "authentik"
+}
+
+######################
+# Redis
+######################
+variable "redis_host" {
+  description = "value"
+  default = "redis.redis"
+}
+
+variable "redis_pass" {
+  description = "value"
+  default = "redis"
+}
+
+######################
+# Mail
 ######################
 
-# variable "postgresql_enabled" {
-#   description = "Controls if the buildin postgres chart should be deployed"
-#   default = false
-# }
+variable "authentik_mail_host" {
+  description = "value"
+  default = ""
+}
+
+variable "authentik_mail_port" {
+  description = "value"
+  default =  587
+}
+
+variable "authentik_mail_use_ssl" {
+  description = "value"
+  default = false
+}
+
+variable "authentik_mail_use_tls" {
+  description = "value"
+  default = false
+}
+
+variable "authentik_mail_username" {
+  description = "value"
+  default = ""
+}
+
+variable "authentik_mail_password" {
+  description = "value"
+  default = ""
+}
+
+variable "authentik_mail_from" {
+  description = "value"
+  default = ""
+}
 
 ######################
-# Ingress configuration
+# Ingress
 ######################
-
-# variable "use_tls" {
-#   description = "Control if tls is used by ingress"
-# }
-# variable "ingress_use_tls_acme" {
-#   description = "Sets the kubernetes.io/tls-acme annotation for ingress"
-#   default = true
-# }
-# variable "ingress_tls_secret_name" {
-#   description = "Sets the secret name for tls for ingress"
-#   default = "jhaas-authentik-tls"
-# }
-# variable "ingress_cert_manager_issuer" {
-#   description = "Sets the cert-manager.io/cluster-issuer annotation for ingress"
-#   default = "cert-manager"
-# }
+variable "cm_issuer" {
+  description = "value"
+  default = "cluster-issuer"
+}
