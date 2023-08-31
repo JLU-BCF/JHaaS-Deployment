@@ -106,5 +106,8 @@ resource "helm_release" "authentik" {
       ]
     }
   )]
+}
 
+output "authentik_bootstrap_pass" {
+  value = var.authentik_bootstrap_pass
 }

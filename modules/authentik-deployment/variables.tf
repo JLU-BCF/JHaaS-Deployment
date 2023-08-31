@@ -3,10 +3,9 @@
 ######################
 variable "kubeconfig" {
   description = "Kubernetes configuration file to use"
-  default = "~/.kube/config"
 }
 
-variable "authentik_name" {
+variable "authentik_namespace" {
   description = "value"
   default = "authentik"
 }
@@ -18,7 +17,6 @@ variable "authentik_name" {
 
 variable "authentik_fqdn" {
   description = "value"
-  default = "authentik.jhaas.gi.denbi.de"
 }
 
 ######################
@@ -35,17 +33,14 @@ variable "authentik_secret" {
 
 variable "authentik_bootstrap_mail" {
   description = "value"
-  default = ""
 }
 
 variable "authentik_bootstrap_pass" {
   description = "value"
-  default = ""
 }
 
 variable "authentik_bootstrap_token" {
   description = "value"
-  default = ""
 }
 
 variable "authentik_blueprints_override_name" {
@@ -78,7 +73,6 @@ variable "authentik_db_user" {
 
 variable "authentik_db_pass" {
   description = "value"
-  default = "authentik"
 }
 
 ######################
@@ -91,7 +85,6 @@ variable "redis_host" {
 
 variable "redis_pass" {
   description = "value"
-  default = "redis"
 }
 
 ######################

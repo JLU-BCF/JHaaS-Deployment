@@ -9,7 +9,13 @@ variable "kubeconfig" {
 # AUTHENTIK
 ###############
 variable "authentik_fqdn" {
-  description = "FQDN for authentik"
+  description = "value"
+  default = "authentik.jhaas.gi.denbi.de"
+}
+
+variable "authentik_bootstrap_mail" {
+  description = "value"
+  default = ""
 }
 
 ###############
