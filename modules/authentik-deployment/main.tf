@@ -16,9 +16,24 @@ locals {
   authentik_tls_secret_name = "${var.authentik_name}-tls-secret"
 }
 
+resource "kubernetes_secret" "bootstrap_data" {
+  metadata {
+    name = "authentik-bootstrap-data"
+    namespace = var.authentik_namespace
+  }
+
+  data = {
+    AUTHENTIK_BOOTSTRAP_EMAIL = var.authentik_bootstrap_mail
+    AUTHENTIK_BOOTSTRAP_PASSWORD = var.authentik_bootstrap_pass
+    AUTHENTIK_BOOTSTRAP_TOKEN = var.authentik_bootstrap_token
+  }
+}
+
 resource "helm_release" "authentik" {
   name       = var.authentik_name
   count      = var.deploy_authentik == true ? 1 : 0
+
+  depends_on = [ kubernetes_secret.bootstrap_data ]
 
   repository = "https://charts.goauthentik.io"
   chart      = "authentik"
@@ -31,9 +46,6 @@ resource "helm_release" "authentik" {
     {
       authentik = {
         secret_key = var.authentik_secret,
-        # bootstrap_email = var.authentik_bootstrap_mail,
-        # bootstrap_password = var.authentik_bootstrap_pass,
-        # bootstrap_token = var.authentik_bootstrap_token,
         error_reporting = {
           enabled = false
         },
@@ -60,11 +72,15 @@ resource "helm_release" "authentik" {
         }
       },
       env = {
-        AUTHENTIK_BOOTSTRAP_EMAIL = var.authentik_bootstrap_mail,
-        AUTHENTIK_BOOTSTRAP_PASSWORD = var.authentik_bootstrap_pass,
-        AUTHENTIK_BOOTSTRAP_TOKEN = var.authentik_bootstrap_token,
         AUTHENTIK_REDIS__DB = 1
       },
+      envFrom = [
+        {
+          secretRef = {
+            name = "authentik-bootstrap-data"
+          }
+        }
+      ],
       postgresql = {
         enabled = false
       },

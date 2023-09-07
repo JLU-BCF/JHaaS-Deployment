@@ -99,6 +99,8 @@ module "authentik-config" {
 
   count = var.configure_authentik == true ? 1 : 0
 
+  depends_on = [ module.authentik-deployment ]
+
   # Authentik Accessibility configuration
   authentik_token = random_password.authentik_bootstrap_token.result
   authentik_domain = var.authentik_fqdn

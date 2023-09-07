@@ -215,6 +215,11 @@ variable "deploy_authentik" {
   default = true
 }
 
+variable "configure_authentik" {
+  description = "value"
+  default = true
+}
+
 variable "authentik_path" {
   description = "Path where Authentik is accessible."
   default     = ""
