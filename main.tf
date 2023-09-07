@@ -150,3 +150,29 @@ output "authentik_password" {
   value = random_password.authentik_bootstrap_pass.result
   sensitive = true
 }
+
+variable "jhaas_helm_registry_host" {
+  description = "value"
+  default = "git.computational.bio.uni-giessen.de"
+}
+variable "jhaas_helm_registry_user" {
+  description = "value"
+  default = null
+}
+variable "jhaas_helm_registry_pass" {
+  description = "value"
+  default = null
+}
+
+module "jhaas-portal" {
+  source = "./modules/jhaas-portal"
+
+  kubeconfig = var.kubeconfig
+  jhaas_helm_registry_host = var.jhaas_helm_registry_host
+  jhaas_helm_registry_user = var.jhaas_helm_registry_user
+  jhaas_helm_registry_pass = var.jhaas_helm_registry_pass
+
+  deploy_jhaas = false
+  jhaas_name = "jhaas-portal"
+  jhaas_namespace = "jhaas-portal"
+}
