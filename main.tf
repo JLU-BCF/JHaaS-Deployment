@@ -163,6 +163,15 @@ variable "jhaas_helm_registry_pass" {
   description = "value"
   default = null
 }
+variable "jhaas_image_credentials_registry" {
+  description = "value"
+}
+variable "jhaas_image_credentials_user" {
+  description = "value"
+}
+variable "jhaas_image_credentials_pass" {
+  description = "value"
+}
 
 module "jhaas-portal" {
   source = "./modules/jhaas-portal"
@@ -171,8 +180,16 @@ module "jhaas-portal" {
   jhaas_helm_registry_host = var.jhaas_helm_registry_host
   jhaas_helm_registry_user = var.jhaas_helm_registry_user
   jhaas_helm_registry_pass = var.jhaas_helm_registry_pass
+  jhaas_image_credentials_registry = var.jhaas_image_credentials_registry
+  jhaas_image_credentials_user = var.jhaas_image_credentials_user
+  jhaas_image_credentials_pass = var.jhaas_image_credentials_pass
 
   deploy_jhaas = false
   jhaas_name = "jhaas-portal"
   jhaas_namespace = "jhaas-portal"
+  jhaas_portal_fqdn = var.portal_fqdn
+
+  jhaas_backend_jh_domain = ""
+  jhaas_session_cookie_secret = ""
+  jhaas_frontend_url = ""
 }

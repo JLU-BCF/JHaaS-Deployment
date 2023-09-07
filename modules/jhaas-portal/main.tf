@@ -25,7 +25,7 @@ resource "helm_release" "jhaas" {
   name       = var.jhaas_name
   count      = var.deploy_jhaas == true ? 1 : 0
 
-  repository = "https://git.computational.bio.uni-giessen.de/jhaas/portal-helm-chart"
+  repository = "oci://harbor.computational.bio.uni-giessen.de/jhaas"
   chart      = "jhaas-portal"
   # version    = "2023.8.1"
 
@@ -35,23 +35,55 @@ resource "helm_release" "jhaas" {
   values = [yamlencode(
     {
       jhaas = {
-        domain = "",
-        issuer = "",
+        domain = var.jhaas_portal_fqdn,
+        issuer = var.cm_issuer,
         icon = ""
       },
       imageCredentials = {
-        registry = "harbor.computational.bio.uni-giessen.de",
-        username = "",
-        password = ""
+        registry = var.jhaas_image_credentials_registry,
+        username = var.jhaas_image_credentials_user,
+        password = var.jhaas_image_credentials_pass
       },
       backend = {
-
+        image = {
+          registry = "harbor.computational.bio.uni-giessen.de"
+          repository = "jhaas/portal-backend"
+          tag = "master"
+          pullPolicy = "IfNotPresent"
+        }
+        conf = {
+          JH_DOMAIN = var.jhaas_backend_jh_domain
+          K8S_TF_IMAGE = var.jhaas_k8s_tf_image
+          K8S_TF_IMAGE_PP = "IfNotPresent"
+          K8S_TF_NS = ""
+          NODE_ENV = "production"
+          PORT = "8000"
+          FRONTEND_URL = ""
+          SESSION_COOKIE_SECRET = var.jhaas_session_cookie_secret
+          SESSION_STORAGE = "redis"
+          SESSION_STORAGE_URL = var.jhaas_redis_url
+        }
       },
       frontend = {
-
+        image = {
+          registry = "harbor.computational.bio.uni-giessen.de"
+          repository = "jhaas/jhaas-frontend"
+          tag = "master"
+          pullPolicy = "IfNotPresent"
+        },
+        conf = {
+          port = "80"
+        }
       },
       postgres = {
         enabled = false
+        conf = {
+          POSTGRES_HOST = ""
+          POSTGRES_PORT = ""
+          POSTGRES_DB = ""
+          POSTGRES_USER = ""
+          POSTGRES_PASSWORD = ""
+        }
       },
       redis = {
         enabled = false
