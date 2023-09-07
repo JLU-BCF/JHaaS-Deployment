@@ -22,6 +22,16 @@ resource "random_password" "authentik_bootstrap_pass" {
   special          = false
 }
 
+#################
+# OIDC
+#################
+
+# Create random secret key for jhaas OIDC client
+resource "random_password" "jhaas_client_secret" {
+  length           = 50
+  special          = false
+}
+
 ##################
 # POSTGRES
 ##################

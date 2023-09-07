@@ -18,6 +18,7 @@ locals {
 
 resource "helm_release" "authentik" {
   name       = var.authentik_name
+  count      = var.deploy_authentik == true ? 1 : 0
 
   repository = "https://charts.goauthentik.io"
   chart      = "authentik"
@@ -30,6 +31,9 @@ resource "helm_release" "authentik" {
     {
       authentik = {
         secret_key = var.authentik_secret,
+        # bootstrap_email = var.authentik_bootstrap_mail,
+        # bootstrap_password = var.authentik_bootstrap_pass,
+        # bootstrap_token = var.authentik_bootstrap_token,
         error_reporting = {
           enabled = false
         },
@@ -55,6 +59,12 @@ resource "helm_release" "authentik" {
           username = var.authentik_mail_username
         }
       },
+      env = {
+        AUTHENTIK_BOOTSTRAP_EMAIL = var.authentik_bootstrap_mail,
+        AUTHENTIK_BOOTSTRAP_PASSWORD = var.authentik_bootstrap_pass,
+        AUTHENTIK_BOOTSTRAP_TOKEN = var.authentik_bootstrap_token,
+        AUTHENTIK_REDIS__DB = 1
+      },
       postgresql = {
         enabled = false
       },
@@ -67,12 +77,6 @@ resource "helm_release" "authentik" {
           "cert-manager.io/cluster-issuer" = var.cm_issuer
         },
         enabled = true,
-        env = {
-          AUTHENTIK_BOOTSTRAP_EMAIL = var.authentik_bootstrap_mail,
-          AUTHENTIK_BOOTSTRAP_PASSWORD = var.authentik_bootstrap_pass,
-          AUTHENTIK_BOOTSTRAP_TOKEN = var.authentik_bootstrap_token,
-          AUTHENTIK_REDIS__DB = 1
-        },
         hosts = [
           {
             host = var.authentik_fqdn,
@@ -106,8 +110,4 @@ resource "helm_release" "authentik" {
       ]
     }
   )]
-}
-
-output "authentik_bootstrap_pass" {
-  value = var.authentik_bootstrap_pass
 }

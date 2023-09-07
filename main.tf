@@ -56,6 +56,8 @@ module "basics" {
 module "authentik-deployment" {
   source = "./modules/authentik-deployment"
 
+  deploy_authentik = var.deploy_authentik
+
   kubeconfig = local.authentik_kubeconfig
   cm_issuer = local.authentik_cm_issuer
   authentik_namespace = var.authentik_namespace
@@ -85,4 +87,64 @@ module "authentik-deployment" {
   authentik_mail_username = var.authentik_mail_username
   authentik_mail_password = var.authentik_mail_password
   authentik_mail_from = var.authentik_mail_from
+}
+
+provider "authentik" {
+  url   = "https://${var.authentik_fqdn}${var.authentik_path}"
+  token = random_password.authentik_bootstrap_token.result
+}
+
+module "authentik-config" {
+  source = "./modules/authentik-config"
+
+  count = var.configure_authentik == true ? 1 : 0
+
+  # Authentik Accessibility configuration
+  authentik_token = random_password.authentik_bootstrap_token.result
+  authentik_domain = var.authentik_fqdn
+  authentik_port = null
+  authentik_ssl = true
+  authentik_path = var.authentik_path
+
+  # JHaaS Accessibility configuration
+  jhaas_domain = var.portal_fqdn
+  jhaas_port = null
+  jhaas_ssl = true
+  jhaas_path = var.jhaas_path
+
+  # JHaaS OIDC configuration
+  authentik_jhaas_client_id = var.authentik_jhaas_client_id
+  authentik_jhaas_client_secret = random_password.jhaas_client_secret.result
+  authentik_provider_redirect_uri = var.authentik_provider_redirect_uri
+
+  # Flows configuration
+  authentik_jhaas_login_flow = var.authentik_jhaas_login_flow
+  authentik_flow_background = var.authentik_flow_background
+  authentik_tos_url = var.authentik_tos_url
+  authentik_jhaas_login_redirect = var.authentik_jhaas_login_redirect
+  authentik_jhaas_verify_redirect = var.authentik_jhaas_verify_redirect
+  authentik_jhaas_launch_url = var.authentik_jhaas_launch_url
+
+  # Branding configuration
+  authentik_jhaas_slogan = var.authentik_jhaas_slogan
+  authentik_branding_title = var.authentik_branding_title
+  authentik_branding_favicon = var.authentik_branding_favicon
+  authentik_branding_logo = var.authentik_branding_logo
+  authentik_branding_publisher = var.authentik_branding_publisher
+
+  # Mail Templating
+  authentik_email_subject_enrollment = var.authentik_email_subject_enrollment
+  authentik_email_template_enrollment = var.authentik_email_template_enrollment
+  authentik_email_subject_recovery = var.authentik_email_subject_recovery
+  authentik_email_template_recovery = var.authentik_email_template_recovery
+}
+
+output "authentik_token" {
+  value = random_password.authentik_bootstrap_token.result
+  sensitive = true
+}
+
+output "authentik_password" {
+  value = random_password.authentik_bootstrap_pass.result
+  sensitive = true
 }

@@ -39,7 +39,7 @@ module "nginx-ingress-controller" {
 
   source  = "terraform-iaac/nginx-controller/helm"
 
-  controller_kind = "Deployment"
+  controller_kind = "DaemonSet"
   define_nodePorts = false
 
   additional_set = []
@@ -72,7 +72,7 @@ resource "helm_release" "postgres" {
         initdb = {
           user = "postgres",
           scripts = {
-            seed = <<-SEED_DB
+            "seed.sh" = <<-SEED_DB
               #!/bin/bash
 
               set -e

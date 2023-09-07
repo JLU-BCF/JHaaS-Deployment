@@ -5,6 +5,11 @@ variable "kubeconfig" {
   description = "Kubernetes configuration file to use"
 }
 
+variable "deploy_authentik" {
+  description = "value"
+  default = true
+}
+
 variable "authentik_namespace" {
   description = "value"
   default = "authentik"
