@@ -73,3 +73,19 @@ resource "random_password" "minio_pass" {
   length           = 32
   special          = false
 }
+
+###############
+# JHaaS
+###############
+
+# Create a random session cookie secret
+resource "random_password" "jhaas_session_secret_1" {
+  length = 32
+  special = false
+}
+
+# Create a random session cookie secret
+resource "random_password" "jhaas_session_secret_2" {
+  length = 32
+  special = false
+}

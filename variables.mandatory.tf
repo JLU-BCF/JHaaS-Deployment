@@ -10,12 +10,6 @@ variable "kubeconfig" {
 ###############
 variable "authentik_fqdn" {
   description = "value"
-  default = "authentik.jhaas.gi.denbi.de"
-}
-
-variable "authentik_bootstrap_mail" {
-  description = "value"
-  default = ""
 }
 
 ###############
@@ -30,5 +24,12 @@ variable "portal_fqdn" {
 ###############
 variable "cm_issuer_email" {
   description = "E-Mail to be used with cert manager. Mandatory if cert-manager shall be deployed."
-  # default = null
+  default = null
+}
+
+###############
+# JUPYTER-HUBS
+###############
+variable "jupyterhubs_base_fqdn" {
+  description = "Base FQDN for JupyterHub deployments"
 }

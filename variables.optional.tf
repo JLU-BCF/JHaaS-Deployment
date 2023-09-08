@@ -47,16 +47,6 @@ variable "postgres_name" {
   default = "postgres"
 }
 
-variable "jhaas_db_name" {
-  description = "value"
-  default = "jhaas"
-}
-
-variable "jhaas_db_user" {
-  description = "value"
-  default = "jhaas"
-}
-
 ###############
 # REDIS
 ###############
@@ -114,6 +104,11 @@ variable "authentik_namespace" {
 variable "authentik_name" {
   description = "value"
   default = "authentik"
+}
+
+variable "authentik_bootstrap_mail" {
+  description = "value"
+  default = "akadmin@jhaas.intern"
 }
 
 variable "authentik_log_level" {
@@ -316,3 +311,67 @@ variable "authentik_email_template_recovery" {
 ###############
 # JHaaS
 ###############
+variable "deploy_jhaas" {
+  description = "value"
+  default = true
+}
+variable "jhaas_kubeconfig" {
+  description = "Set if you want to deploy authentik somewhere else"
+  default = null
+}
+variable "jhaas_cm_issuer" {
+  description = "Set if it differs"
+  default = null
+}
+variable "jhaas_backend_jh_domain" {
+  description = "value"
+  default = null
+}
+variable "jhaas_k8s_tf_image" {
+  description = "value"
+  default = "harbor.computational.bio.uni-giessen.de/jhaas/tf-worker:master"
+}
+variable "jhaas_redis_url" {
+  description = "value"
+  default = null
+}
+variable "jhaas_redis_pass" {
+  description = "value"
+  default = null
+}
+variable "jhaas_authentik_jupyter_hub_group" {
+  description = "value"
+  default = "jupyter"
+}
+variable "jhaas_authentik_authentication_flow" {
+  description = "value"
+  default = "jhaas-auth"
+}
+variable "jhaas_authentik_authorization_flow" {
+  description = "value"
+  default = "jhaas-consent"
+}
+variable "jhaas_authentik_icon" {
+  description = "value"
+  default = "/static/dist/assets/icons/icon.png"
+}
+variable "jhaas_db_host" {
+  description = "value"
+  default = null
+}
+variable "jhaas_db_port" {
+  description = "value"
+  default = 5432
+}
+variable "jhaas_db_name" {
+  description = "value"
+  default = "jhaas"
+}
+variable "jhaas_db_user" {
+  description = "value"
+  default = "jhaas"
+}
+variable "jhaas_db_pass" {
+  description = "value"
+  default = null
+}

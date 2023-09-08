@@ -37,7 +37,7 @@ resource "helm_release" "jhaas" {
       jhaas = {
         domain = var.jhaas_portal_fqdn,
         issuer = var.cm_issuer,
-        icon = ""
+        icon = var.jhaas_authentik_icon
       },
       imageCredentials = {
         registry = var.jhaas_image_credentials_registry,
@@ -58,7 +58,7 @@ resource "helm_release" "jhaas" {
           K8S_TF_NS = ""
           NODE_ENV = "production"
           PORT = "8000"
-          FRONTEND_URL = ""
+          FRONTEND_URL = "https://${var.jhaas_portal_fqdn}/"
           SESSION_COOKIE_SECRET = var.jhaas_session_cookie_secret
           SESSION_STORAGE = "redis"
           SESSION_STORAGE_URL = var.jhaas_redis_url
@@ -67,7 +67,7 @@ resource "helm_release" "jhaas" {
       frontend = {
         image = {
           registry = "harbor.computational.bio.uni-giessen.de"
-          repository = "jhaas/jhaas-frontend"
+          repository = "jhaas/portal-frontend"
           tag = "master"
           pullPolicy = "IfNotPresent"
         },
@@ -78,11 +78,11 @@ resource "helm_release" "jhaas" {
       postgres = {
         enabled = false
         conf = {
-          POSTGRES_HOST = ""
-          POSTGRES_PORT = ""
-          POSTGRES_DB = ""
-          POSTGRES_USER = ""
-          POSTGRES_PASSWORD = ""
+          POSTGRES_HOST = var.jhaas_db_host
+          POSTGRES_PORT = var.jhaas_db_port
+          POSTGRES_DB = var.jhaas_db_name
+          POSTGRES_USER = var.jhaas_db_user
+          POSTGRES_PASSWORD = var.jhaas_db_pass
         }
       },
       redis = {
@@ -90,46 +90,46 @@ resource "helm_release" "jhaas" {
       },
       ingress = {
         enabled = true,
-        host = "",
+        host = var.jhaas_portal_fqdn,
         tls = {
           enabled = true,
-          issuer = "",
-          secretName = ""
+          issuer = var.cm_issuer,
+          secretName = local.jhaas_tls_secret_name
         }
       },
       mail = {
-        host = "",
-        port = "",
-        secure = false,
-        from = "",
-        from_name = "",
-        copy_addresses = "[]"
+        host = var.jhaas_mail_host,
+        port = var.jhaas_mail_port,
+        secure = var.jhaas_mail_secure,
+        from = var.jhaas_mail_from,
+        from_name = var.jhaas_mail_from_name,
+        copy_addresses = var.jhaas_mail_copy_addresses
       },
       s3 = {
-        host = "",
-        port = 80,
-        ssl = false,
-        access_key = "",
-        secret_key = "",
-        api = "S3v2",
+        host = var.jhaas_s3_host,
+        port = var.jhaas_s3_port,
+        ssl = var.jhaas_s3_ssl,
+        access_key = var.jhaas_s3_access_key,
+        secret_key = var.jhaas_s3_secret_key,
+        api = var.jhaas_s3_api,
         buckets = {
-          tf_state = "tf-state",
-          jh_specs = "jh_specs"
+          tf_state = var.jhaas_s3_bucket_tf_state,
+          jh_specs = var.jhaas_s3_bucket_tf_state
         }
       },
       oidc = {
-        endpoint = "",
-        callback_url = "",
-        client_id = "",
-        client_secret = ""
+        endpoint = var.jhaas_oidc_endpoint,
+        callback_url = var.jhaas_oidc_callback_url,
+        client_id = var.jhaas_oidc_client_id,
+        client_secret = var.jhaas_oidc_client_secret
       }
       authentik = {
-        url = "",
-        api_endpoint = "",
-        api_secret = "",
-        jupyter_hub_group = "",
-        authentication_flow = "",
-        authorization_flow = ""
+        url = var.jhaas_authentik_url,
+        api_endpoint = var.jhaas_authentik_api_endpoint,
+        api_secret = var.jhaas_authentik_api_secret,
+        jupyter_hub_group = var.jhaas_authentik_jupyter_hub_group,
+        authentication_flow = var.jhaas_authentik_authentication_flow,
+        authorization_flow = var.jhaas_authentik_authorization_flow
       }
     }
   )]

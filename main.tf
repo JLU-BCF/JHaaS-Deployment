@@ -2,6 +2,9 @@
 locals {
   postgres_url = "${var.postgres_name}.${var.postgres_namespace}"
   redis_url = "${var.redis_name}-master.${var.redis_namespace}"
+  portal_url = "https://${var.portal_fqdn}/"
+  authentik_url = "https://${var.authentik_fqdn}/"
+  authentik_api_url = "https://${var.authentik_fqdn}/api/v3"
 }
 
 # authentik
@@ -15,6 +18,19 @@ locals {
   # generated overrides
   authentik_db_pass = var.authentik_db_pass == null ? random_password.authentik_db_pass.result : var.authentik_db_pass
   authentik_redis_pass = var.authentik_redis_pass == null ? random_password.redis_pass.result : var.authentik_redis_pass
+}
+
+# jhaas
+locals {
+  # static overrides
+  jhaas_kubeconfig = var.jhaas_kubeconfig == null ? var.kubeconfig : var.jhaas_kubeconfig
+  jhaas_cm_issuer = var.jhaas_cm_issuer == null ? var.cm_issuer : var.jhaas_cm_issuer
+  jhaas_db_host = var.jhaas_db_host == null ? local.postgres_url : var.jhaas_db_host
+  jhaas_redis_url = var.jhaas_redis_url == null ? local.redis_url : var.jhaas_redis_url
+
+  # generated overrides
+  jhaas_db_pass = var.jhaas_db_pass == null ? random_password.jhaas_db_pass.result : var.jhaas_db_pass
+  jhaas_redis_pass = var.jhaas_redis_pass == null ? random_password.redis_pass.result : var.jhaas_redis_pass
 }
 
 module "basics" {
@@ -176,7 +192,9 @@ variable "jhaas_image_credentials_pass" {
 module "jhaas-portal" {
   source = "./modules/jhaas-portal"
 
-  kubeconfig = var.kubeconfig
+  kubeconfig = local.jhaas_kubeconfig
+  cm_issuer = local.jhaas_cm_issuer
+
   jhaas_helm_registry_host = var.jhaas_helm_registry_host
   jhaas_helm_registry_user = var.jhaas_helm_registry_user
   jhaas_helm_registry_pass = var.jhaas_helm_registry_pass
@@ -184,12 +202,38 @@ module "jhaas-portal" {
   jhaas_image_credentials_user = var.jhaas_image_credentials_user
   jhaas_image_credentials_pass = var.jhaas_image_credentials_pass
 
-  deploy_jhaas = false
+  deploy_jhaas = var.deploy_jhaas
   jhaas_name = "jhaas-portal"
   jhaas_namespace = "jhaas-portal"
   jhaas_portal_fqdn = var.portal_fqdn
 
-  jhaas_backend_jh_domain = ""
-  jhaas_session_cookie_secret = ""
-  jhaas_frontend_url = ""
+  jhaas_backend_jh_domain = var.jupyterhubs_base_fqdn
+  jhaas_k8s_tf_image = var.jhaas_k8s_tf_image
+  jhaas_frontend_url = local.portal_url
+  jhaas_session_cookie_secret = "[${random_password.jhaas_session_secret_1.result}, ${random_password.jhaas_session_secret_2.result}]"
+  jhaas_redis_url = "redis://default:${local.jhaas_redis_pass}@${local.jhaas_redis_url}/0"
+  jhaas_redis_pass = null
+
+  jhaas_authentik_url = local.authentik_url
+  jhaas_authentik_api_endpoint = local.authentik_api_url
+  jhaas_authentik_api_secret = random_password.authentik_bootstrap_token.result
+  jhaas_authentik_jupyter_hub_group = var.jhaas_authentik_jupyter_hub_group
+  jhaas_authentik_authentication_flow = var.jhaas_authentik_authentication_flow
+  jhaas_authentik_authorization_flow = var.jhaas_authentik_authorization_flow
+  jhaas_authentik_icon = var.jhaas_authentik_icon
+
+  jhaas_db_host = local.jhaas_db_host
+  jhaas_db_port = var.jhaas_db_port
+  jhaas_db_name = var.jhaas_db_name
+  jhaas_db_user = var.jhaas_db_user
+  jhaas_db_pass = local.jhaas_db_pass
+
+  # Mail (omitted for now)
+
+  # S3 (omitted for now)
+
+  jhaas_oidc_endpoint = "${local.authentik_url}application/o/portal"
+  jhaas_oidc_callback_url = "${local.portal_url}api/auth/oidc/cb"
+  jhaas_oidc_client_id = var.authentik_jhaas_client_id
+  jhaas_oidc_client_secret = random_password.jhaas_client_secret.result
 }
