@@ -128,7 +128,7 @@ resource "helm_release" "jhaas" {
         api = var.jhaas_s3_api,
         buckets = {
           tf_state = var.jhaas_s3_bucket_tf_state,
-          jh_specs = var.jhaas_s3_bucket_tf_state
+          jh_specs = var.jhaas_s3_bucket_jh_specs
         }
       },
       oidc = {
