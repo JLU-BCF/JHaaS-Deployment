@@ -2,6 +2,7 @@
 locals {
   postgres_url = "${var.postgres_name}.${var.postgres_namespace}"
   redis_url = "${var.redis_name}-master.${var.redis_namespace}"
+  minio_url = "${var.minio_name}.${var.minio_namespace}"
   portal_url = "https://${var.portal_fqdn}/"
   authentik_url = "https://${var.authentik_fqdn}/"
   authentik_api_url = "https://${var.authentik_fqdn}/api/v3"
@@ -31,6 +32,13 @@ locals {
   # generated overrides
   jhaas_db_pass = var.jhaas_db_pass == null ? random_password.jhaas_db_pass.result : var.jhaas_db_pass
   jhaas_redis_pass = var.jhaas_redis_pass == null ? random_password.redis_pass.result : var.jhaas_redis_pass
+}
+
+# jhaas s3
+locals {
+  jhaas_s3_host = var.jhaas_s3_host == null ? local.minio_url : var.jhaas_s3_host
+  jhaas_s3_access_key = var.jhaas_s3_access_key == null ? random_pet.minio_user.id : var.jhaas_s3_access_key
+  jhaas_s3_secret_key = var.jhaas_s3_secret_key == null ? random_password.minio_pass.result : var.jhaas_s3_secret_key
 }
 
 module "basics" {
@@ -230,7 +238,14 @@ module "jhaas-portal" {
 
   # Mail (omitted for now)
 
-  # S3 (omitted for now)
+  jhaas_s3_host = local.jhaas_s3_host
+  jhaas_s3_port = var.jhaas_s3_port
+  jhaas_s3_ssl = var.jhaas_s3_ssl
+  jhaas_s3_access_key = local.jhaas_s3_access_key
+  jhaas_s3_secret_key = local.jhaas_s3_secret_key
+  jhaas_s3_api = var.jhaas_s3_api
+  jhaas_s3_bucket_tf_state = var.jhaas_s3_bucket_tf_state
+  jhaas_s3_bucket_jh_specs = var.jhaas_s3_bucket_jh_specs
 
   jhaas_oidc_endpoint = "${local.authentik_url}application/o/portal"
   jhaas_oidc_callback_url = "${local.portal_url}api/auth/oidc/cb"

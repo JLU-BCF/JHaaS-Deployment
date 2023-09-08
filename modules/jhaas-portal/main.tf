@@ -21,6 +21,20 @@ locals {
   jhaas_tls_secret_name = "${var.jhaas_name}-tls-secret"
 }
 
+resource "kubernetes_secret" "jupyter_cluster_kubeconfig" {
+  depends_on = [ helm_release.jhaas ]
+  metadata {
+    name = "sec-${var.jhaas_name}-cloud-kubeconfig"
+    namespace = var.jhaas_namespace
+    labels = {
+      "${var.jhaas_name}.secret" = "${var.jhaas_name}-cloud-kubeconfig"
+    }
+  }
+  data = {
+    "kubeconfig.secret" = file(var.kubeconfig)
+  }
+}
+
 resource "helm_release" "jhaas" {
   name       = var.jhaas_name
   count      = var.deploy_jhaas == true ? 1 : 0
@@ -55,7 +69,7 @@ resource "helm_release" "jhaas" {
           JH_DOMAIN = var.jhaas_backend_jh_domain
           K8S_TF_IMAGE = var.jhaas_k8s_tf_image
           K8S_TF_IMAGE_PP = "IfNotPresent"
-          K8S_TF_NS = ""
+          K8S_TF_NS = var.jhaas_namespace
           NODE_ENV = "production"
           PORT = "8000"
           FRONTEND_URL = "https://${var.jhaas_portal_fqdn}/"

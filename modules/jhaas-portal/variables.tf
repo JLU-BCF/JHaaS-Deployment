@@ -118,7 +118,7 @@ variable "jhaas_db_host" {
 }
 variable "jhaas_db_port" {
   description = "value"
-  default = 5432
+  default = "5432"
 }
 variable "jhaas_db_name" {
   description = "value"
@@ -169,7 +169,7 @@ variable "jhaas_s3_host" {
 }
 variable "jhaas_s3_port" {
   description = "value"
-  default = 80
+  default = "80"
 }
 variable "jhaas_s3_ssl" {
   description = "value"

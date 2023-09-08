@@ -135,7 +135,7 @@ variable "authentik_db_host" {
 
 variable "authentik_db_port" {
   description = "value"
-  default = 5432
+  default = "5432"
 }
 
 variable "authentik_db_name" {
@@ -174,7 +174,7 @@ variable "authentik_mail_host" {
 
 variable "authentik_mail_port" {
   description = "value"
-  default =  587
+  default =  "587"
 }
 
 variable "authentik_mail_use_ssl" {
@@ -331,6 +331,7 @@ variable "jhaas_k8s_tf_image" {
   description = "value"
   default = "harbor.computational.bio.uni-giessen.de/jhaas/tf-worker:master"
 }
+# JHaaS Redis
 variable "jhaas_redis_url" {
   description = "value"
   default = null
@@ -339,6 +340,7 @@ variable "jhaas_redis_pass" {
   description = "value"
   default = null
 }
+# JHaaS Authentik
 variable "jhaas_authentik_jupyter_hub_group" {
   description = "value"
   default = "jupyter"
@@ -355,13 +357,14 @@ variable "jhaas_authentik_icon" {
   description = "value"
   default = "/static/dist/assets/icons/icon.png"
 }
+# JHaaS DB
 variable "jhaas_db_host" {
   description = "value"
   default = null
 }
 variable "jhaas_db_port" {
   description = "value"
-  default = 5432
+  default = "5432"
 }
 variable "jhaas_db_name" {
   description = "value"
@@ -374,4 +377,37 @@ variable "jhaas_db_user" {
 variable "jhaas_db_pass" {
   description = "value"
   default = null
+}
+# JHaaS S3
+variable "jhaas_s3_host" {
+  description = "value"
+  default = null
+}
+variable "jhaas_s3_port" {
+  description = "value"
+  default = "9000"
+}
+variable "jhaas_s3_ssl" {
+  description = "value"
+  default = false
+}
+variable "jhaas_s3_access_key" {
+  description = "value"
+  default = null
+}
+variable "jhaas_s3_secret_key" {
+  description = "value"
+  default = null
+}
+variable "jhaas_s3_api" {
+  description = "value"
+  default = "S3v2"
+}
+variable "jhaas_s3_bucket_tf_state" {
+  description = "value"
+  default = "tf-state"
+}
+variable "jhaas_s3_bucket_jh_specs" {
+  description = "value"
+  default = "jh-specs"
 }
