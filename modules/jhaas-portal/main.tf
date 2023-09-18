@@ -21,8 +21,20 @@ locals {
   jhaas_tls_secret_name = "${var.jhaas_name}-tls-secret"
 }
 
+resource "kubernetes_namespace" "jhaas" {
+
+  count      = var.deploy_jhaas == true ? 1 : 0
+
+  metadata {
+    name = var.jhaas_namespace
+  }
+}
+
 resource "kubernetes_secret" "jupyter_cluster_kubeconfig" {
-  depends_on = [ helm_release.jhaas ]
+  count      = var.deploy_jhaas == true ? 1 : 0
+
+  depends_on = [ kubernetes_namespace.jhaas ]
+
   metadata {
     name = "sec-${var.jhaas_name}-cloud-kubeconfig"
     namespace = var.jhaas_namespace

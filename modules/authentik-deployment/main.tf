@@ -16,7 +16,21 @@ locals {
   authentik_tls_secret_name = "${var.authentik_name}-tls-secret"
 }
 
+resource "kubernetes_namespace" "authentik" {
+
+  count      = var.deploy_authentik == true ? 1 : 0
+
+  metadata {
+    name = var.authentik_namespace
+  }
+}
+
 resource "kubernetes_secret" "bootstrap_data" {
+
+  count      = var.deploy_authentik == true ? 1 : 0
+
+  depends_on = [ kubernetes_namespace.authentik ]
+
   metadata {
     name = "authentik-bootstrap-data"
     namespace = var.authentik_namespace

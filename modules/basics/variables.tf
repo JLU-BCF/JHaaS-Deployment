@@ -23,9 +23,19 @@ variable "cm_namespace" {
   default = "cert-manager"
 }
 
+variable "cm_name" {
+  description = "Name to be used for cert-manager"
+  default = "cert-manager"
+}
+
 variable "cm_issuer" {
   description = "Name for the default cert-manager cluster issuer"
   default = "cluster-issuer"
+}
+
+variable "cm_issuer_server" {
+  description = "The ACME server URL"
+  default     = "https://acme-v02.api.letsencrypt.org/directory"
 }
 
 ###############
@@ -38,6 +48,11 @@ variable "deploy_nginx_ingress_controller" {
 
 variable "ingress_namespace" {
   description = "Namespace for nginx ingress"
+  default = "nginx-ingress"
+}
+
+variable "ingress_name" {
+  description = "Name for nginx ingress"
   default = "nginx-ingress"
 }
 

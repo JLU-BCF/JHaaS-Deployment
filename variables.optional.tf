@@ -347,11 +347,11 @@ variable "jhaas_authentik_jupyter_hub_group" {
 }
 variable "jhaas_authentik_authentication_flow" {
   description = "value"
-  default = "jhaas-auth"
+  default = "auth"
 }
 variable "jhaas_authentik_authorization_flow" {
   description = "value"
-  default = "jhaas-consent"
+  default = "consent"
 }
 variable "jhaas_authentik_icon" {
   description = "value"

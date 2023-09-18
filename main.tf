@@ -1,3 +1,23 @@
+provider "helm" {
+  # alias  = "helm-basics"
+
+  kubernetes {
+    config_path = var.kubeconfig
+  }
+}
+
+provider "kubernetes" {
+  # alias  = "kubernetes-basics"
+
+  config_path = var.kubeconfig
+}
+
+provider "kubectl" {
+  # alias  = "kubectl-basics"
+
+  config_path = var.kubeconfig
+}
+
 # internal service urls
 locals {
   postgres_url = "${var.postgres_name}.${var.postgres_namespace}"
@@ -43,6 +63,12 @@ locals {
 
 module "basics" {
   source = "./modules/basics"
+
+  # providers = {
+  #   helm = "helm-basics"
+  #   kubernetes = "kubernetes-basics"
+  #   kubectl = "kubectl-basics"
+  # }
 
   kubeconfig = var.kubeconfig
 
@@ -222,7 +248,7 @@ module "jhaas-portal" {
   jhaas_redis_url = "redis://default:${local.jhaas_redis_pass}@${local.jhaas_redis_url}/0"
   jhaas_redis_pass = null
 
-  jhaas_authentik_url = local.authentik_url
+  jhaas_authentik_url = "https://${var.authentik_fqdn}"
   jhaas_authentik_api_endpoint = local.authentik_api_url
   jhaas_authentik_api_secret = random_password.authentik_bootstrap_token.result
   jhaas_authentik_jupyter_hub_group = var.jhaas_authentik_jupyter_hub_group
