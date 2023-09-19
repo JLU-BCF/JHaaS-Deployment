@@ -62,7 +62,7 @@ resource "helm_release" "jhaas" {
     {
       jhaas = {
         domain = var.jhaas_portal_fqdn,
-        issuer = var.cm_issuer,
+        issuer = var.cm_issuer_hubs,
         icon = var.jhaas_authentik_icon
       },
       imageCredentials = {

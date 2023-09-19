@@ -14,6 +14,11 @@ variable "cm_issuer" {
   default = "cluster-issuer"
 }
 
+variable "cm_issuer_hubs" {
+  description = "value"
+  default = "cluster-issuer"
+}
+
 variable "deploy_jhaas" {
   description = "value"
   default = true

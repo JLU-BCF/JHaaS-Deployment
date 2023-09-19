@@ -379,6 +379,10 @@ variable "jhaas_cm_issuer" {
   description = "Set if it differs"
   default     = null
 }
+variable "jhaas_cm_issuer_hubs" {
+  description = "value"
+  default = null
+}
 variable "jhaas_backend_jh_domain" {
   description = "value"
   default     = null

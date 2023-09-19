@@ -73,6 +73,7 @@ locals {
 # jhaas hubs
 locals {
   jhaas_kubeconfig_hubs = var.jhaas_kubeconfig_hubs == null ? local.jhaas_kubeconfig : var.jhaas_kubeconfig_hubs
+  jhaas_cm_issuer_hubs = var.jhaas_cm_issuer_hubs == null ? local.jhaas_cm_issuer : var.jhaas_cm_issuer_hubs
 }
 
 # jhaas s3
@@ -260,6 +261,7 @@ module "jhaas-portal" {
   kubeconfig      = local.jhaas_kubeconfig
   kubeconfig_hubs = local.jhaas_kubeconfig_hubs
   cm_issuer       = local.jhaas_cm_issuer
+  cm_issuer_hubs  = local.jhaas_cm_issuer_hubs
 
   jhaas_helm_registry_host         = var.jhaas_helm_registry_host
   jhaas_helm_registry_user         = var.jhaas_helm_registry_user
