@@ -316,7 +316,11 @@ variable "deploy_jhaas" {
   default     = true
 }
 variable "jhaas_kubeconfig" {
-  description = "Set if you want to deploy authentik somewhere else"
+  description = "Set if you want to deploy jhaas somewhere else"
+  default     = null
+}
+variable "jhaas_kubeconfig_hubs" {
+  description = "Set if you want to deploy hubs somewhere else"
   default     = null
 }
 variable "jhaas_cm_issuer" {

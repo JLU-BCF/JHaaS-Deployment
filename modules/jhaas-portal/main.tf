@@ -43,7 +43,7 @@ resource "kubernetes_secret" "jupyter_cluster_kubeconfig" {
     }
   }
   data = {
-    "kubeconfig.secret" = file(var.kubeconfig)
+    "kubeconfig.secret" = file(var.kubeconfig_hubs)
   }
 }
 

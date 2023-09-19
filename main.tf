@@ -54,6 +54,11 @@ locals {
   jhaas_redis_pass = var.jhaas_redis_pass == null ? random_password.redis_pass.result : var.jhaas_redis_pass
 }
 
+# jhaas hubs
+locals {
+  jhaas_kubeconfig_hubs = var.jhaas_kubeconfig_hubs == null ? local.jhaas_kubeconfig : var.jhaas_kubeconfig_hubs
+}
+
 # jhaas s3
 locals {
   jhaas_s3_host       = var.jhaas_s3_host == null ? local.minio_url : var.jhaas_s3_host
@@ -233,6 +238,7 @@ module "jhaas-portal" {
   source = "./modules/jhaas-portal"
 
   kubeconfig = local.jhaas_kubeconfig
+  kubeconfig_hubs = local.jhaas_kubeconfig_hubs
   cm_issuer  = local.jhaas_cm_issuer
 
   jhaas_helm_registry_host         = var.jhaas_helm_registry_host

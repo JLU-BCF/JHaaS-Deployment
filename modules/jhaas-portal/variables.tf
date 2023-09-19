@@ -5,6 +5,10 @@ variable "kubeconfig" {
   description = "Kubernetes configuration file to use"
 }
 
+variable "kubeconfig_hubs" {
+  description = "Kubernetes configuration file to use for deployments"
+}
+
 variable "cm_issuer" {
   description = "value"
   default = "cluster-issuer"
