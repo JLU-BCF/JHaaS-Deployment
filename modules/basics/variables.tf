@@ -6,6 +6,30 @@ variable "kubeconfig" {
 }
 
 ###############
+# VERSIONS
+###############
+variable "chart_certmanager_version" {
+  description = "value"
+  default = null
+}
+variable "chart_ingress_version" {
+  description = "value"
+  default = null
+}
+variable "chart_minio_version" {
+  description = "value"
+  default = null
+}
+variable "chart_postgres_version" {
+  description = "value"
+  default = null
+}
+variable "chart_redis_version" {
+  description = "value"
+  default = null
+}
+
+###############
 # CERT-MANAGER
 ###############
 variable "deploy_cert_manager" {

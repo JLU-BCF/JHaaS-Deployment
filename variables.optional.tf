@@ -3,17 +3,17 @@
 ###############
 variable "deploy_cert_manager" {
   description = "Whether to deploy cert manager"
-  default = true
+  default     = true
 }
 
 variable "cm_namespace" {
-    description = "Namespace to be used for cert-manager"
-    default = "cert-manager"
+  description = "Namespace to be used for cert-manager"
+  default     = "cert-manager"
 }
 
 variable "cm_issuer" {
-    description = "Name for the default cert-manager cluster issuer"
-    default = "cluster-issuer"
+  description = "Name for the default cert-manager cluster issuer"
+  default     = "cluster-issuer"
 }
 
 ###############
@@ -21,12 +21,12 @@ variable "cm_issuer" {
 ###############
 variable "deploy_nginx_ingress_controller" {
   description = "Whether to deploy nginx ingress controller"
-  default = true
+  default     = true
 }
 
 variable "ingress_namespace" {
-    description = "Namespace for nginx ingress"
-    default = "nginx-ingress"
+  description = "Namespace for nginx ingress"
+  default     = "nginx-ingress"
 }
 
 ###############
@@ -34,17 +34,17 @@ variable "ingress_namespace" {
 ###############
 variable "deploy_postgres" {
   description = "Whether to deploy postgres DB"
-  default = true
+  default     = true
 }
 
 variable "postgres_namespace" {
-    description = "Namespace to be used for postgres"
-    default = "postgres"
+  description = "Namespace to be used for postgres"
+  default     = "postgres"
 }
 
 variable "postgres_name" {
   description = "value"
-  default = "postgres"
+  default     = "postgres"
 }
 
 ###############
@@ -52,17 +52,17 @@ variable "postgres_name" {
 ###############
 variable "deploy_redis" {
   description = "value"
-  default = true
+  default     = true
 }
 
 variable "redis_namespace" {
   description = "value"
-  default = "redis"
+  default     = "redis"
 }
 
 variable "redis_name" {
   description = "value"
-  default = "redis"
+  default     = "redis"
 }
 
 ###############
@@ -70,22 +70,22 @@ variable "redis_name" {
 ###############
 variable "deploy_minio" {
   description = "value"
-  default = true
+  default     = true
 }
 
 variable "minio_namespace" {
   description = "value"
-  default = "minio"
+  default     = "minio"
 }
 
 variable "minio_name" {
   description = "value"
-  default = "minio"
+  default     = "minio"
 }
 
 variable "minio_buckets" {
   description = "comma-seperated list of buckets"
-  default = "tf-state,jh-specs"
+  default     = "tf-state,jh-specs"
 }
 
 ###############
@@ -93,113 +93,113 @@ variable "minio_buckets" {
 ###############
 variable "authentik_kubeconfig" {
   description = "Set if you want to deploy authentik somewhere else"
-  default = null
+  default     = null
 }
 
 variable "authentik_namespace" {
   description = "value"
-  default = "authentik"
+  default     = "authentik"
 }
 
 variable "authentik_name" {
   description = "value"
-  default = "authentik"
+  default     = "authentik"
 }
 
 variable "authentik_bootstrap_mail" {
   description = "value"
-  default = "akadmin@jhaas.intern"
+  default     = "akadmin@jhaas.intern"
 }
 
 variable "authentik_log_level" {
   description = "value"
-  default = "info"
+  default     = "info"
 }
 
 variable "authentik_blueprints_override_name" {
   description = "value"
-  default = "authentik-blueprints-override"
+  default     = "authentik-blueprints-override"
 }
 
 variable "authentik_cm_issuer" {
   description = "Set if it differs"
-  default = null
+  default     = null
 }
 
 # DATABASE
 
 variable "authentik_db_host" {
   description = "Generated if internal db is used. Set if external db is used."
-  default = null
+  default     = null
 }
 
 variable "authentik_db_port" {
   description = "value"
-  default = "5432"
+  default     = "5432"
 }
 
 variable "authentik_db_name" {
   description = "value"
-  default = "authentik"
+  default     = "authentik"
 }
 
 variable "authentik_db_user" {
   description = "value"
-  default = "authentik"
+  default     = "authentik"
 }
 
 variable "authentik_db_pass" {
   description = "Generated if internal db is used. Set if external db is used."
-  default = null
+  default     = null
 }
 
 # REDIS
 
 variable "authentik_redis_host" {
   description = "Generated if internal db is used. Set if external db is used."
-  default = null
+  default     = null
 }
 
 variable "authentik_redis_pass" {
   description = "Generated if internal db is used. Set if external db is used."
-  default = null
+  default     = null
 }
 
 # MAIL
 
 variable "authentik_mail_host" {
   description = "value"
-  default = ""
+  default     = ""
 }
 
 variable "authentik_mail_port" {
   description = "value"
-  default =  "587"
+  default     = "587"
 }
 
 variable "authentik_mail_use_ssl" {
   description = "value"
-  default = false
+  default     = false
 }
 
 variable "authentik_mail_use_tls" {
   description = "value"
-  default = false
+  default     = false
 }
 
 variable "authentik_mail_username" {
   description = "value"
-  default = ""
+  default     = ""
 }
 
 variable "authentik_mail_password" {
   description = "value"
-  default = ""
+  default     = ""
 }
 
 variable "authentik_mail_from" {
   description = "value"
-  default = ""
+  default     = ""
 }
 
 ###############
@@ -207,12 +207,12 @@ variable "authentik_mail_from" {
 ###############
 variable "deploy_authentik" {
   description = "value"
-  default = true
+  default     = true
 }
 
 variable "configure_authentik" {
   description = "value"
-  default = true
+  default     = true
 }
 
 variable "authentik_path" {
@@ -313,101 +313,101 @@ variable "authentik_email_template_recovery" {
 ###############
 variable "deploy_jhaas" {
   description = "value"
-  default = true
+  default     = true
 }
 variable "jhaas_kubeconfig" {
   description = "Set if you want to deploy authentik somewhere else"
-  default = null
+  default     = null
 }
 variable "jhaas_cm_issuer" {
   description = "Set if it differs"
-  default = null
+  default     = null
 }
 variable "jhaas_backend_jh_domain" {
   description = "value"
-  default = null
+  default     = null
 }
 variable "jhaas_k8s_tf_image" {
   description = "value"
-  default = "harbor.computational.bio.uni-giessen.de/jhaas/tf-worker:master"
+  default     = "harbor.computational.bio.uni-giessen.de/jhaas/tf-worker:master"
 }
 # JHaaS Redis
 variable "jhaas_redis_url" {
   description = "value"
-  default = null
+  default     = null
 }
 variable "jhaas_redis_pass" {
   description = "value"
-  default = null
+  default     = null
 }
 # JHaaS Authentik
 variable "jhaas_authentik_jupyter_hub_group" {
   description = "value"
-  default = "jupyter"
+  default     = "jupyter"
 }
 variable "jhaas_authentik_authentication_flow" {
   description = "value"
-  default = "auth"
+  default     = "auth"
 }
 variable "jhaas_authentik_authorization_flow" {
   description = "value"
-  default = "consent"
+  default     = "consent"
 }
 variable "jhaas_authentik_icon" {
   description = "value"
-  default = "/static/dist/assets/icons/icon.png"
+  default     = "/static/dist/assets/icons/icon.png"
 }
 # JHaaS DB
 variable "jhaas_db_host" {
   description = "value"
-  default = null
+  default     = null
 }
 variable "jhaas_db_port" {
   description = "value"
-  default = "5432"
+  default     = "5432"
 }
 variable "jhaas_db_name" {
   description = "value"
-  default = "jhaas"
+  default     = "jhaas"
 }
 variable "jhaas_db_user" {
   description = "value"
-  default = "jhaas"
+  default     = "jhaas"
 }
 variable "jhaas_db_pass" {
   description = "value"
-  default = null
+  default     = null
 }
 # JHaaS S3
 variable "jhaas_s3_host" {
   description = "value"
-  default = null
+  default     = null
 }
 variable "jhaas_s3_port" {
   description = "value"
-  default = "9000"
+  default     = "9000"
 }
 variable "jhaas_s3_ssl" {
   description = "value"
-  default = false
+  default     = false
 }
 variable "jhaas_s3_access_key" {
   description = "value"
-  default = null
+  default     = null
 }
 variable "jhaas_s3_secret_key" {
   description = "value"
-  default = null
+  default     = null
 }
 variable "jhaas_s3_api" {
   description = "value"
-  default = "S3v2"
+  default     = "S3v2"
 }
 variable "jhaas_s3_bucket_tf_state" {
   description = "value"
-  default = "tf-state"
+  default     = "tf-state"
 }
 variable "jhaas_s3_bucket_jh_specs" {
   description = "value"
-  default = "jh-specs"
+  default     = "jh-specs"
 }

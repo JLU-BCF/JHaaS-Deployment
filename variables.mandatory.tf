@@ -24,7 +24,7 @@ variable "portal_fqdn" {
 ###############
 variable "cm_issuer_email" {
   description = "E-Mail to be used with cert manager. Mandatory if cert-manager shall be deployed."
-  default = null
+  default     = null
 }
 
 ###############

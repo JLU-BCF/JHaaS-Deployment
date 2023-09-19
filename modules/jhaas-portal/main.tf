@@ -53,7 +53,7 @@ resource "helm_release" "jhaas" {
 
   repository = "oci://harbor.computational.bio.uni-giessen.de/jhaas"
   chart      = "jhaas-portal"
-  # version    = "2023.8.1"
+  version    = var.chart_jhaas_version
 
   create_namespace = true
   namespace = var.jhaas_namespace

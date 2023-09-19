@@ -9,7 +9,7 @@ resource "helm_release" "minio" {
 
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "minio"
-  # version    = "2023.8.1"
+  version    = var.chart_minio_version
 
   create_namespace = true
   namespace = var.minio_namespace

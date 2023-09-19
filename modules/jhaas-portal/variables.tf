@@ -15,6 +15,11 @@ variable "deploy_jhaas" {
   default = true
 }
 
+variable "chart_jhaas_version" {
+  description = "value"
+  default = null
+}
+
 variable "jhaas_portal_fqdn" {
   description = "value"
 }
