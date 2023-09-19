@@ -1,4 +1,39 @@
 ###############
+# MAIL
+###############
+variable "mail_host" {
+  description = "value"
+  default     = ""
+}
+variable "mail_port" {
+  description = "value"
+  default     = "587"
+}
+variable "mail_ssl" {
+  description = "value"
+  default     = false
+}
+variable "mail_tls" {
+  description = "value"
+  default     = false
+}
+variable "mail_from" {
+  description = "value"
+  default     = ""
+}
+variable "mail_from_name" {
+  description = "value"
+  default     = ""
+}
+variable "mail_username" {
+  description = "value"
+  default     = ""
+}
+variable "mail_password" {
+  description = "value"
+  default     = ""
+}
+###############
 # CERT-MANAGER
 ###############
 variable "deploy_cert_manager" {
@@ -169,37 +204,37 @@ variable "authentik_redis_pass" {
 
 variable "authentik_mail_host" {
   description = "value"
-  default     = ""
+  default     = null
 }
 
 variable "authentik_mail_port" {
   description = "value"
-  default     = "587"
+  default     = null
 }
 
 variable "authentik_mail_use_ssl" {
   description = "value"
-  default     = false
+  default     = null
 }
 
 variable "authentik_mail_use_tls" {
   description = "value"
-  default     = false
+  default     = null
 }
 
 variable "authentik_mail_username" {
   description = "value"
-  default     = ""
+  default     = null
 }
 
 variable "authentik_mail_password" {
   description = "value"
-  default     = ""
+  default     = null
 }
 
 variable "authentik_mail_from" {
   description = "value"
-  default     = ""
+  default     = null
 }
 
 ###############
@@ -381,6 +416,31 @@ variable "jhaas_db_user" {
 variable "jhaas_db_pass" {
   description = "value"
   default     = null
+}
+# JHaaS Mail
+variable "jhaas_mail_host" {
+  description = "value"
+  default     = null
+}
+variable "jhaas_mail_port" {
+  description = "value"
+  default     = null
+}
+variable "jhaas_mail_secure" {
+  description = "value"
+  default     = null
+}
+variable "jhaas_mail_from" {
+  description = "value"
+  default     = null
+}
+variable "jhaas_mail_from_name" {
+  description = "value"
+  default     = null
+}
+variable "jhaas_mail_copy_addresses" {
+  description = "value"
+  default     = "[]"
 }
 # JHaaS S3
 variable "jhaas_s3_host" {

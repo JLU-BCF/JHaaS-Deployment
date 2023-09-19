@@ -36,6 +36,15 @@ locals {
   authentik_db_host    = var.authentik_db_host == null ? local.postgres_url : var.authentik_db_host
   authentik_redis_host = var.authentik_redis_host == null ? local.redis_url : var.authentik_redis_host
 
+  # Mail
+  authentik_mail_host     = var.authentik_mail_host == null ? var.mail_host : var.authentik_mail_host
+  authentik_mail_port     = var.authentik_mail_port == null ? var.mail_port : var.authentik_mail_port
+  authentik_mail_use_ssl  = var.authentik_mail_use_ssl == null ? var.mail_ssl : var.authentik_mail_use_ssl
+  authentik_mail_use_tls  = var.authentik_mail_use_tls == null ? var.mail_tls : var.authentik_mail_use_tls
+  authentik_mail_username = var.authentik_mail_username == null ? var.mail_username : var.authentik_mail_username
+  authentik_mail_password = var.authentik_mail_password == null ? var.mail_password : var.authentik_mail_password
+  authentik_mail_from     = var.authentik_mail_from == null ? var.mail_from : var.authentik_mail_from
+
   # generated overrides
   authentik_db_pass    = var.authentik_db_pass == null ? random_password.authentik_db_pass.result : var.authentik_db_pass
   authentik_redis_pass = var.authentik_redis_pass == null ? random_password.redis_pass.result : var.authentik_redis_pass
@@ -48,6 +57,13 @@ locals {
   jhaas_cm_issuer  = var.jhaas_cm_issuer == null ? var.cm_issuer : var.jhaas_cm_issuer
   jhaas_db_host    = var.jhaas_db_host == null ? local.postgres_url : var.jhaas_db_host
   jhaas_redis_url  = var.jhaas_redis_url == null ? local.redis_url : var.jhaas_redis_url
+
+  # Mail
+  jhaas_mail_host      = var.jhaas_mail_host == null ? var.mail_host : var.jhaas_mail_host
+  jhaas_mail_port      = var.jhaas_mail_port == null ? var.mail_port : var.jhaas_mail_port
+  jhaas_mail_secure    = var.jhaas_mail_secure == null ? var.mail_ssl || var.mail_tls : var.jhaas_mail_secure
+  jhaas_mail_from      = var.jhaas_mail_from == null ? var.mail_from : var.jhaas_mail_from
+  jhaas_mail_from_name = var.jhaas_mail_from_name == null ? var.mail_from_name : var.jhaas_mail_from_name
 
   # generated overrides
   jhaas_db_pass    = var.jhaas_db_pass == null ? random_password.jhaas_db_pass.result : var.jhaas_db_pass
@@ -141,13 +157,13 @@ module "authentik-deployment" {
   redis_host = local.authentik_redis_host
   redis_pass = local.authentik_redis_pass
 
-  authentik_mail_host     = var.authentik_mail_host
-  authentik_mail_port     = var.authentik_mail_port
-  authentik_mail_use_ssl  = var.authentik_mail_use_ssl
-  authentik_mail_use_tls  = var.authentik_mail_use_tls
-  authentik_mail_username = var.authentik_mail_username
-  authentik_mail_password = var.authentik_mail_password
-  authentik_mail_from     = var.authentik_mail_from
+  authentik_mail_host     = local.authentik_mail_host
+  authentik_mail_port     = local.authentik_mail_port
+  authentik_mail_use_ssl  = local.authentik_mail_use_ssl
+  authentik_mail_use_tls  = local.authentik_mail_use_tls
+  authentik_mail_username = local.authentik_mail_username
+  authentik_mail_password = local.authentik_mail_password
+  authentik_mail_from     = local.authentik_mail_from
 }
 
 provider "authentik" {
@@ -237,9 +253,9 @@ variable "jhaas_image_credentials_pass" {
 module "jhaas-portal" {
   source = "./modules/jhaas-portal"
 
-  kubeconfig = local.jhaas_kubeconfig
+  kubeconfig      = local.jhaas_kubeconfig
   kubeconfig_hubs = local.jhaas_kubeconfig_hubs
-  cm_issuer  = local.jhaas_cm_issuer
+  cm_issuer       = local.jhaas_cm_issuer
 
   jhaas_helm_registry_host         = var.jhaas_helm_registry_host
   jhaas_helm_registry_user         = var.jhaas_helm_registry_user
@@ -276,6 +292,12 @@ module "jhaas-portal" {
   jhaas_db_pass = local.jhaas_db_pass
 
   # Mail (omitted for now)
+  jhaas_mail_host           = local.jhaas_mail_host
+  jhaas_mail_port           = local.jhaas_mail_port
+  jhaas_mail_secure         = local.jhaas_mail_secure
+  jhaas_mail_from           = local.jhaas_mail_from
+  jhaas_mail_from_name      = local.jhaas_mail_from_name
+  jhaas_mail_copy_addresses = var.jhaas_mail_copy_addresses
 
   jhaas_s3_host            = local.jhaas_s3_host
   jhaas_s3_port            = var.jhaas_s3_port
