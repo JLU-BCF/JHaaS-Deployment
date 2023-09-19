@@ -18,7 +18,7 @@ locals {
 
 resource "kubernetes_namespace" "authentik" {
 
-  count      = var.deploy_authentik == true ? 1 : 0
+  count      = var.deploy_authentik && var.create_authentik_namespace ? 1 : 0
 
   metadata {
     name = var.authentik_namespace

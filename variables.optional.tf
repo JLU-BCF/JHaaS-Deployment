@@ -245,6 +245,11 @@ variable "deploy_authentik" {
   default     = true
 }
 
+variable "create_authentik_namespace" {
+  description = "value"
+  default = true
+}
+
 variable "configure_authentik" {
   description = "value"
   default     = true
@@ -349,6 +354,18 @@ variable "authentik_email_template_recovery" {
 variable "deploy_jhaas" {
   description = "value"
   default     = true
+}
+variable "create_jhaas_namespace" {
+  description = "value"
+  default = true
+}
+variable "jhaas_namespace" {
+  description = "value"
+  default = "jhaas-portal"
+}
+variable "jhaas_name" {
+  description = "value"
+  default = "jhaas-portal"
 }
 variable "jhaas_kubeconfig" {
   description = "Set if you want to deploy jhaas somewhere else"

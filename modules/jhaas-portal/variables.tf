@@ -19,6 +19,11 @@ variable "deploy_jhaas" {
   default = true
 }
 
+variable "create_jhaas_namespace" {
+  description = "value"
+  default = true
+}
+
 variable "chart_jhaas_version" {
   description = "value"
   default = null

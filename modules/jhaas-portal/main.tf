@@ -23,7 +23,7 @@ locals {
 
 resource "kubernetes_namespace" "jhaas" {
 
-  count      = var.deploy_jhaas == true ? 1 : 0
+  count      = var.deploy_jhaas && var.create_jhaas_namespace ? 1 : 0
 
   metadata {
     name = var.jhaas_namespace

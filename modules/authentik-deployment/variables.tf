@@ -9,6 +9,10 @@ variable "deploy_authentik" {
   description = "value"
   default = true
 }
+variable "create_authentik_namespace" {
+  description = "value"
+  default = true
+}
 
 variable "chart_authentik_version" {
   description = "value"

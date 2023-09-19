@@ -134,6 +134,7 @@ module "authentik-deployment" {
 
   deploy_authentik        = var.deploy_authentik
   chart_authentik_version = var.chart_authentik_version
+  create_authentik_namespace = var.create_authentik_namespace
 
   kubeconfig          = local.authentik_kubeconfig
   cm_issuer           = local.authentik_cm_issuer
@@ -242,12 +243,15 @@ variable "jhaas_helm_registry_pass" {
 }
 variable "jhaas_image_credentials_registry" {
   description = "value"
+  default     = null
 }
 variable "jhaas_image_credentials_user" {
   description = "value"
+  default     = null
 }
 variable "jhaas_image_credentials_pass" {
   description = "value"
+  default     = null
 }
 
 module "jhaas-portal" {
@@ -265,9 +269,10 @@ module "jhaas-portal" {
   jhaas_image_credentials_pass     = var.jhaas_image_credentials_pass
 
   deploy_jhaas        = var.deploy_jhaas
+  create_jhaas_namespace = var.create_jhaas_namespace
   chart_jhaas_version = var.chart_jhaas_version
-  jhaas_name          = "jhaas-portal"
-  jhaas_namespace     = "jhaas-portal"
+  jhaas_name          = var.jhaas_name
+  jhaas_namespace     = var.jhaas_namespace
   jhaas_portal_fqdn   = var.portal_fqdn
 
   jhaas_backend_jh_domain     = var.jupyterhubs_base_fqdn
