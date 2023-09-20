@@ -15,6 +15,12 @@ resource "helm_release" "application" {
   namespace        = var.ingress_namespace
 
   values = [yamlencode(
-    {}
+    {
+      controller = {
+        ingressClassResource = {
+          default = true
+        }
+      }
+    }
   )]
 }
