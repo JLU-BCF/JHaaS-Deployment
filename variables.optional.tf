@@ -351,6 +351,18 @@ variable "authentik_email_template_recovery" {
 ###############
 # JHaaS
 ###############
+variable "jhaas_image_credentials" {
+  description = "An Array of { name: string, registry: string, username: string, password: string }"
+  default     = []
+}
+variable "jhaas_backend_image_name" {
+  description = "value"
+  default = "harbor.computational.bio.uni-giessen.de/bcf/portal-backend:master"
+}
+variable "jhaas_frontend_image_name" {
+  description = "value"
+  default = "harbor.computational.bio.uni-giessen.de/bcf/portal-frontend:master"
+}
 variable "deploy_jhaas" {
   description = "value"
   default     = true

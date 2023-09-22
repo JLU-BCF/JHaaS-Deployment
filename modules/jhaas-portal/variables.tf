@@ -51,28 +51,17 @@ variable "jhaas_namespace" {
 ###########
 # Registry Stuff
 ###########
-variable "jhaas_helm_registry_host" {
-  description = "value"
-  default = "git.computational.bio.uni-giessen.de"
+variable "image_credentials" {
+  description = "{name: string, registry: string, username: string, password: string}[]"
+  default = []
 }
-variable "jhaas_helm_registry_user" {
+variable "backend_image_name" {
   description = "value"
-  default = null
+  default = "harbor.computational.bio.uni-giessen.de/bcf/portal-backend:master"
 }
-variable "jhaas_helm_registry_pass" {
+variable "frontend_image_name" {
   description = "value"
-  default = null
-}
-variable "jhaas_image_credentials_registry" {
-  description = "value"
-}
-
-variable "jhaas_image_credentials_user" {
-  description = "value"
-}
-
-variable "jhaas_image_credentials_pass" {
-  description = "value"
+  default = "harbor.computational.bio.uni-giessen.de/bcf/portal-frontend:master"
 }
 
 ###########

@@ -2,11 +2,6 @@ provider "helm" {
   kubernetes {
     config_path = var.kubeconfig
   }
-  registry {
-    url = var.jhaas_helm_registry_host
-    username = var.jhaas_helm_registry_user
-    password = var.jhaas_helm_registry_pass
-  }
 }
 
 provider "kubernetes" {
@@ -65,16 +60,10 @@ resource "helm_release" "jhaas" {
         issuer = var.cm_issuer_hubs,
         icon = var.jhaas_authentik_icon
       },
-      imageCredentials = {
-        registry = var.jhaas_image_credentials_registry,
-        username = var.jhaas_image_credentials_user,
-        password = var.jhaas_image_credentials_pass
-      },
+      imageCredentials = var.image_credentials,
       backend = {
         image = {
-          registry = "harbor.computational.bio.uni-giessen.de"
-          repository = "jhaas/portal-backend"
-          tag = "master"
+          name = var.backend_image_name
           pullPolicy = "IfNotPresent"
         }
         conf = {
@@ -92,9 +81,7 @@ resource "helm_release" "jhaas" {
       },
       frontend = {
         image = {
-          registry = "harbor.computational.bio.uni-giessen.de"
-          repository = "jhaas/portal-frontend"
-          tag = "master"
+          name = var.frontend_image_name
           pullPolicy = "IfNotPresent"
         },
         conf = {

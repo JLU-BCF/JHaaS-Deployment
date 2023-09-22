@@ -230,31 +230,6 @@ output "authentik_password" {
   sensitive = true
 }
 
-variable "jhaas_helm_registry_host" {
-  description = "value"
-  default     = "git.computational.bio.uni-giessen.de"
-}
-variable "jhaas_helm_registry_user" {
-  description = "value"
-  default     = null
-}
-variable "jhaas_helm_registry_pass" {
-  description = "value"
-  default     = null
-}
-variable "jhaas_image_credentials_registry" {
-  description = "value"
-  default     = null
-}
-variable "jhaas_image_credentials_user" {
-  description = "value"
-  default     = null
-}
-variable "jhaas_image_credentials_pass" {
-  description = "value"
-  default     = null
-}
-
 module "jhaas-portal" {
   source = "./modules/jhaas-portal"
 
@@ -263,12 +238,9 @@ module "jhaas-portal" {
   cm_issuer       = local.jhaas_cm_issuer
   cm_issuer_hubs  = local.jhaas_cm_issuer_hubs
 
-  jhaas_helm_registry_host         = var.jhaas_helm_registry_host
-  jhaas_helm_registry_user         = var.jhaas_helm_registry_user
-  jhaas_helm_registry_pass         = var.jhaas_helm_registry_pass
-  jhaas_image_credentials_registry = var.jhaas_image_credentials_registry
-  jhaas_image_credentials_user     = var.jhaas_image_credentials_user
-  jhaas_image_credentials_pass     = var.jhaas_image_credentials_pass
+  image_credentials = var.jhaas_image_credentials
+  backend_image_name = var.jhaas_backend_image_name
+  frontend_image_name = var.jhaas_frontend_image_name
 
   deploy_jhaas        = var.deploy_jhaas
   create_jhaas_namespace = var.create_jhaas_namespace
