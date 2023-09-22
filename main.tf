@@ -83,6 +83,11 @@ locals {
   jhaas_s3_secret_key = var.jhaas_s3_secret_key == null ? random_password.minio_pass.result : var.jhaas_s3_secret_key
 }
 
+# jhaas user docs
+locals {
+  jhaas_user_docs_cm_issuer  = var.jhaas_user_docs_cm_issuer == null ? var.cm_issuer : var.jhaas_user_docs_cm_issuer
+}
+
 module "basics" {
   source = "./modules/basics"
 
@@ -291,4 +296,17 @@ module "jhaas-portal" {
   jhaas_oidc_callback_url  = "${local.portal_url}api/auth/oidc/cb"
   jhaas_oidc_client_id     = var.authentik_jhaas_client_id
   jhaas_oidc_client_secret = random_password.jhaas_client_secret.result
+}
+
+module "jhaas-user-docs" {
+  source = "./modules/jhaas-user-docs"
+
+  count = var.deploy_jhaas_user_docs ? 1 : 0
+
+  jhaas_user_docs_fqdn = var.jhaas_user_docs_fqdn
+  jhaas_user_docs_cm_issuer = local.jhaas_user_docs_cm_issuer
+  jhaas_user_docs_name = var.jhaas_user_docs_name
+  jhaas_user_docs_namespace = var.jhaas_user_docs_namespace
+  chart_jhaas_user_docs_version = var.chart_jhaas_user_docs_version
+  jhaas_user_docs_image_name = var.jhaas_user_docs_image_name
 }
