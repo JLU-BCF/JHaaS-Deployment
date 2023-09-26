@@ -141,6 +141,11 @@ variable "authentik_name" {
   default     = "authentik"
 }
 
+variable "authentik_display_name" {
+  description = "value"
+  default     = "Authentik"
+}
+
 variable "authentik_bootstrap_mail" {
   description = "value"
   default     = "akadmin@jhaas.intern"
@@ -247,7 +252,7 @@ variable "deploy_authentik" {
 
 variable "create_authentik_namespace" {
   description = "value"
-  default = true
+  default     = true
 }
 
 variable "configure_authentik" {
@@ -357,11 +362,11 @@ variable "jhaas_image_credentials" {
 }
 variable "jhaas_backend_image_name" {
   description = "value"
-  default = "harbor.computational.bio.uni-giessen.de/bcf/portal-backend:master"
+  default     = "harbor.computational.bio.uni-giessen.de/bcf/portal-backend:master"
 }
 variable "jhaas_frontend_image_name" {
   description = "value"
-  default = "harbor.computational.bio.uni-giessen.de/bcf/portal-frontend:master"
+  default     = "harbor.computational.bio.uni-giessen.de/bcf/portal-frontend:master"
 }
 variable "deploy_jhaas" {
   description = "value"
@@ -369,15 +374,15 @@ variable "deploy_jhaas" {
 }
 variable "create_jhaas_namespace" {
   description = "value"
-  default = true
+  default     = true
 }
 variable "jhaas_namespace" {
   description = "value"
-  default = "jhaas-portal"
+  default     = "jhaas-portal"
 }
 variable "jhaas_name" {
   description = "value"
-  default = "jhaas-portal"
+  default     = "jhaas-portal"
 }
 variable "jhaas_kubeconfig" {
   description = "Set if you want to deploy jhaas somewhere else"
@@ -393,7 +398,7 @@ variable "jhaas_cm_issuer" {
 }
 variable "jhaas_cm_issuer_hubs" {
   description = "value"
-  default = null
+  default     = null
 }
 variable "jhaas_backend_jh_domain" {
   description = "value"
@@ -424,6 +429,10 @@ variable "jhaas_authentik_authentication_flow" {
 variable "jhaas_authentik_authorization_flow" {
   description = "value"
   default     = "consent"
+}
+variable "jhaas_authentik_invalidation_flow" {
+  description = "value"
+  default     = "logout"
 }
 variable "jhaas_authentik_icon" {
   description = "value"
@@ -475,6 +484,10 @@ variable "jhaas_mail_copy_addresses" {
   description = "value"
   default     = "[]"
 }
+variable "jhaas_mail_feedback_address" {
+  description = "value"
+  default     = null
+}
 # JHaaS S3
 variable "jhaas_s3_host" {
   description = "value"
@@ -514,7 +527,7 @@ variable "jhaas_s3_bucket_jh_specs" {
 ###############
 variable "deploy_jhaas_user_docs" {
   description = "value"
-  default = true
+  default     = true
 }
 variable "jhaas_user_docs_cm_issuer" {
   description = "Set if it differs"
@@ -522,13 +535,13 @@ variable "jhaas_user_docs_cm_issuer" {
 }
 variable "jhaas_user_docs_name" {
   description = "value"
-  default = "jhaas-user-docs"
+  default     = "jhaas-user-docs"
 }
 variable "jhaas_user_docs_namespace" {
   description = "value"
-  default = "jhaas-user-docs"
+  default     = "jhaas-user-docs"
 }
 variable "jhaas_user_docs_image_name" {
   description = "value"
-  default = "harbor.computational.bio.uni-giessen.de/jhaas/user:master"
+  default     = "harbor.computational.bio.uni-giessen.de/jhaas/user:master"
 }

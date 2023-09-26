@@ -33,11 +33,11 @@ variable "chart_authentik_version" {
 # JHaaS
 variable "chart_jhaas_version" {
   description = "value"
-  default     = "0.1.0"
+  default     = null
 }
 
 # JHaaS User Docs
 variable "chart_jhaas_user_docs_version" {
   description = "value"
-  default = "0.1.0"
+  default     = null
 }

@@ -92,6 +92,13 @@ variable "jhaas_redis_pass" {
 ###########
 # Authentik
 ###########
+variable "jhaas_authentik_name" {
+  description = "value"
+  default = "Authentik"
+}
+variable "jhaas_authentik_fqdn" {
+  description = "value"
+}
 variable "jhaas_authentik_url" {
   description = "value"
 }
@@ -112,6 +119,10 @@ variable "jhaas_authentik_authentication_flow" {
 variable "jhaas_authentik_authorization_flow" {
   description = "value"
   default = "jhaas-consent"
+}
+variable "jhaas_authentik_invalidation_flow" {
+  description = "value"
+  default = "jhaas-logout"
 }
 variable "jhaas_authentik_icon" {
   description = "value"
@@ -166,6 +177,10 @@ variable "jhaas_mail_from_name" {
 variable "jhaas_mail_copy_addresses" {
   description = "value"
   default = "[]"
+}
+variable "jhaas_mail_feedback_address" {
+  description = "value"
+  default = "feedback@jhaas.local"
 }
 
 ###########

@@ -74,9 +74,16 @@ resource "helm_release" "jhaas" {
           NODE_ENV = "production"
           PORT = "8000"
           FRONTEND_URL = "https://${var.jhaas_portal_fqdn}/"
+          SESSION_COOKIE_NAME = "session"
+          SESSION_COOKIE_PATH = "/"
+          SESSION_COOKIE_MAX_AGE = "28800000"
+          SESSION_COOKIE_SECURE = true
           SESSION_COOKIE_SECRET = var.jhaas_session_cookie_secret
           SESSION_STORAGE = "redis"
           SESSION_STORAGE_URL = var.jhaas_redis_url
+          SESSION_STORAGE_PREFIX = ""
+          TYPEORM_DB_SYNC = false
+          TYPEORM_DB_LOGGING = false
         }
       },
       frontend = {
@@ -117,6 +124,7 @@ resource "helm_release" "jhaas" {
         from = var.jhaas_mail_from,
         from_name = var.jhaas_mail_from_name,
         copy_addresses = var.jhaas_mail_copy_addresses
+        feedback_address = var.jhaas_mail_feedback_address
       },
       s3 = {
         host = var.jhaas_s3_host,
@@ -135,14 +143,18 @@ resource "helm_release" "jhaas" {
         callback_url = var.jhaas_oidc_callback_url,
         client_id = var.jhaas_oidc_client_id,
         client_secret = var.jhaas_oidc_client_secret
+        force_reachability = true
       }
       authentik = {
+        name = var.jhaas_authentik_name
+        fqdn = var.jhaas_authentik_fqdn
         url = var.jhaas_authentik_url,
         api_endpoint = var.jhaas_authentik_api_endpoint,
         api_secret = var.jhaas_authentik_api_secret,
         jupyter_hub_group = var.jhaas_authentik_jupyter_hub_group,
         authentication_flow = var.jhaas_authentik_authentication_flow,
         authorization_flow = var.jhaas_authentik_authorization_flow
+        invalidation_flow = var.jhaas_authentik_invalidation_flow
       }
     }
   )]

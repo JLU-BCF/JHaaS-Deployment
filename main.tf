@@ -65,6 +65,8 @@ locals {
   jhaas_mail_from      = var.jhaas_mail_from == null ? var.mail_from : var.jhaas_mail_from
   jhaas_mail_from_name = var.jhaas_mail_from_name == null ? var.mail_from_name : var.jhaas_mail_from_name
 
+  jhaas_mail_feedback_address = var.jhaas_mail_feedback_address == null ? local.jhaas_mail_from : var.jhaas_mail_feedback_address
+
   # generated overrides
   jhaas_db_pass    = var.jhaas_db_pass == null ? random_password.jhaas_db_pass.result : var.jhaas_db_pass
   jhaas_redis_pass = var.jhaas_redis_pass == null ? random_password.redis_pass.result : var.jhaas_redis_pass
@@ -73,7 +75,7 @@ locals {
 # jhaas hubs
 locals {
   jhaas_kubeconfig_hubs = var.jhaas_kubeconfig_hubs == null ? local.jhaas_kubeconfig : var.jhaas_kubeconfig_hubs
-  jhaas_cm_issuer_hubs = var.jhaas_cm_issuer_hubs == null ? local.jhaas_cm_issuer : var.jhaas_cm_issuer_hubs
+  jhaas_cm_issuer_hubs  = var.jhaas_cm_issuer_hubs == null ? local.jhaas_cm_issuer : var.jhaas_cm_issuer_hubs
 }
 
 # jhaas s3
@@ -85,7 +87,7 @@ locals {
 
 # jhaas user docs
 locals {
-  jhaas_user_docs_cm_issuer  = var.jhaas_user_docs_cm_issuer == null ? var.cm_issuer : var.jhaas_user_docs_cm_issuer
+  jhaas_user_docs_cm_issuer = var.jhaas_user_docs_cm_issuer == null ? var.cm_issuer : var.jhaas_user_docs_cm_issuer
 }
 
 module "basics" {
@@ -138,8 +140,8 @@ module "basics" {
 module "authentik-deployment" {
   source = "./modules/authentik-deployment"
 
-  deploy_authentik        = var.deploy_authentik
-  chart_authentik_version = var.chart_authentik_version
+  deploy_authentik           = var.deploy_authentik
+  chart_authentik_version    = var.chart_authentik_version
   create_authentik_namespace = var.create_authentik_namespace
 
   kubeconfig          = local.authentik_kubeconfig
@@ -243,16 +245,16 @@ module "jhaas-portal" {
   cm_issuer       = local.jhaas_cm_issuer
   cm_issuer_hubs  = local.jhaas_cm_issuer_hubs
 
-  image_credentials = var.jhaas_image_credentials
-  backend_image_name = var.jhaas_backend_image_name
+  image_credentials   = var.jhaas_image_credentials
+  backend_image_name  = var.jhaas_backend_image_name
   frontend_image_name = var.jhaas_frontend_image_name
 
-  deploy_jhaas        = var.deploy_jhaas
+  deploy_jhaas           = var.deploy_jhaas
   create_jhaas_namespace = var.create_jhaas_namespace
-  chart_jhaas_version = var.chart_jhaas_version
-  jhaas_name          = var.jhaas_name
-  jhaas_namespace     = var.jhaas_namespace
-  jhaas_portal_fqdn   = var.portal_fqdn
+  chart_jhaas_version    = var.chart_jhaas_version
+  jhaas_name             = var.jhaas_name
+  jhaas_namespace        = var.jhaas_namespace
+  jhaas_portal_fqdn      = var.portal_fqdn
 
   jhaas_backend_jh_domain     = var.jupyterhubs_base_fqdn
   jhaas_k8s_tf_image          = var.jhaas_k8s_tf_image
@@ -261,12 +263,15 @@ module "jhaas-portal" {
   jhaas_redis_url             = "redis://default:${local.jhaas_redis_pass}@${local.jhaas_redis_url}/0"
   jhaas_redis_pass            = null
 
+  jhaas_authentik_name                = var.authentik_display_name
+  jhaas_authentik_fqdn                = var.authentik_fqdn
   jhaas_authentik_url                 = "https://${var.authentik_fqdn}"
   jhaas_authentik_api_endpoint        = local.authentik_api_url
   jhaas_authentik_api_secret          = random_password.authentik_bootstrap_token.result
   jhaas_authentik_jupyter_hub_group   = var.jhaas_authentik_jupyter_hub_group
   jhaas_authentik_authentication_flow = var.jhaas_authentik_authentication_flow
   jhaas_authentik_authorization_flow  = var.jhaas_authentik_authorization_flow
+  jhaas_authentik_invalidation_flow   = var.jhaas_authentik_invalidation_flow
   jhaas_authentik_icon                = var.jhaas_authentik_icon
 
   jhaas_db_host = local.jhaas_db_host
@@ -276,12 +281,13 @@ module "jhaas-portal" {
   jhaas_db_pass = local.jhaas_db_pass
 
   # Mail (omitted for now)
-  jhaas_mail_host           = local.jhaas_mail_host
-  jhaas_mail_port           = local.jhaas_mail_port
-  jhaas_mail_secure         = local.jhaas_mail_secure
-  jhaas_mail_from           = local.jhaas_mail_from
-  jhaas_mail_from_name      = local.jhaas_mail_from_name
-  jhaas_mail_copy_addresses = var.jhaas_mail_copy_addresses
+  jhaas_mail_host             = local.jhaas_mail_host
+  jhaas_mail_port             = local.jhaas_mail_port
+  jhaas_mail_secure           = local.jhaas_mail_secure
+  jhaas_mail_from             = local.jhaas_mail_from
+  jhaas_mail_from_name        = local.jhaas_mail_from_name
+  jhaas_mail_copy_addresses   = var.jhaas_mail_copy_addresses
+  jhaas_mail_feedback_address = local.jhaas_mail_feedback_address
 
   jhaas_s3_host            = local.jhaas_s3_host
   jhaas_s3_port            = var.jhaas_s3_port
@@ -303,10 +309,10 @@ module "jhaas-user-docs" {
 
   count = var.deploy_jhaas_user_docs ? 1 : 0
 
-  jhaas_user_docs_fqdn = var.jhaas_user_docs_fqdn
-  jhaas_user_docs_cm_issuer = local.jhaas_user_docs_cm_issuer
-  jhaas_user_docs_name = var.jhaas_user_docs_name
-  jhaas_user_docs_namespace = var.jhaas_user_docs_namespace
+  jhaas_user_docs_fqdn          = var.jhaas_user_docs_fqdn
+  jhaas_user_docs_cm_issuer     = local.jhaas_user_docs_cm_issuer
+  jhaas_user_docs_name          = var.jhaas_user_docs_name
+  jhaas_user_docs_namespace     = var.jhaas_user_docs_namespace
   chart_jhaas_user_docs_version = var.chart_jhaas_user_docs_version
-  jhaas_user_docs_image_name = var.jhaas_user_docs_image_name
+  jhaas_user_docs_image_name    = var.jhaas_user_docs_image_name
 }
