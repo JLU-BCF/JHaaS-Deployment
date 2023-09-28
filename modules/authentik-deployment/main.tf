@@ -28,7 +28,6 @@ resource "kubernetes_namespace" "authentik" {
 resource "kubernetes_secret" "bootstrap_data" {
 
   count      = var.deploy_authentik == true ? 1 : 0
-
   depends_on = [ kubernetes_namespace.authentik ]
 
   metadata {
@@ -43,11 +42,26 @@ resource "kubernetes_secret" "bootstrap_data" {
   }
 }
 
+resource "kubernetes_config_map" "templates" {
+
+  count      = var.deploy_authentik == true ? 1 : 0
+  depends_on = [ kubernetes_namespace.authentik ]
+
+  metadata {
+    name = "authentik-templates"
+    namespace = var.authentik_namespace
+  }
+
+  data = {
+    "account_confirmation.html" = "${file("${path.module}/templates/account_confirmation.html")}"
+  }
+}
+
 resource "helm_release" "authentik" {
   name       = var.authentik_name
   count      = var.deploy_authentik == true ? 1 : 0
 
-  depends_on = [ kubernetes_secret.bootstrap_data ]
+  depends_on = [ kubernetes_secret.bootstrap_data, kubernetes_config_map.templates ]
 
   repository = "https://charts.goauthentik.io"
   chart      = "authentik"
@@ -130,12 +144,22 @@ resource "helm_release" "authentik" {
         {
           name = var.authentik_blueprints_override_name,
           mountPath = "/blueprints/default"
+        },
+        {
+          name = "authentik-email-templates",
+          mountPath = "/templates"
         }
       ],
       volumes = [
         {
           name = var.authentik_blueprints_override_name,
           emptyDir = {}
+        },
+        {
+          name = "authentik-email-templates",
+          configMap = {
+            name = "authentik-templates"
+          }
         }
       ]
     }

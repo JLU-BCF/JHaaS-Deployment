@@ -77,7 +77,7 @@ resource "helm_release" "jhaas" {
           SESSION_COOKIE_NAME = "session"
           SESSION_COOKIE_PATH = "/"
           SESSION_COOKIE_MAX_AGE = "28800000"
-          SESSION_COOKIE_SECURE = true
+          SESSION_COOKIE_SECURE = false
           SESSION_COOKIE_SECRET = var.jhaas_session_cookie_secret
           SESSION_STORAGE = "redis"
           SESSION_STORAGE_URL = var.jhaas_redis_url
