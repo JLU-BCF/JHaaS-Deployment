@@ -77,6 +77,9 @@ variable "jhaas_k8s_tf_image" {
 variable "jhaas_frontend_url" {
   description = "value"
 }
+variable "jhaas_docs_address" {
+  description = "value"
+}
 variable "jhaas_session_cookie_secret" {
   description = "value"
 }

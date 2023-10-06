@@ -74,6 +74,9 @@ resource "helm_release" "jhaas" {
           NODE_ENV = "production"
           PORT = "8000"
           FRONTEND_URL = "https://${var.jhaas_portal_fqdn}/"
+          DOCS_ADDRESS = var.jhaas_docs_address
+          BRANDING_ADDRESS = ""
+          LEGAL_ADDRESS = ""
           SESSION_COOKIE_NAME = "session"
           SESSION_COOKIE_PATH = "/"
           SESSION_COOKIE_MAX_AGE = "28800000"

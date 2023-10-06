@@ -259,6 +259,7 @@ module "jhaas-portal" {
   jhaas_backend_jh_domain     = var.jupyterhubs_base_fqdn
   jhaas_k8s_tf_image          = var.jhaas_k8s_tf_image
   jhaas_frontend_url          = local.portal_url
+  jhaas_docs_address          = "https://${var.jhaas_user_docs_fqdn}"
   jhaas_session_cookie_secret = "[${random_password.jhaas_session_secret_1.result}, ${random_password.jhaas_session_secret_2.result}]"
   jhaas_redis_url             = "redis://default:${local.jhaas_redis_pass}@${local.jhaas_redis_url}/0"
   jhaas_redis_pass            = null
