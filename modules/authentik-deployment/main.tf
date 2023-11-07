@@ -18,7 +18,7 @@ locals {
 
 resource "kubernetes_namespace" "authentik" {
 
-  count      = var.deploy_authentik && var.create_authentik_namespace ? 1 : 0
+  count = var.deploy_authentik && var.create_authentik_namespace ? 1 : 0
 
   metadata {
     name = var.authentik_namespace
@@ -28,47 +28,49 @@ resource "kubernetes_namespace" "authentik" {
 resource "kubernetes_secret" "bootstrap_data" {
 
   count      = var.deploy_authentik == true ? 1 : 0
-  depends_on = [ kubernetes_namespace.authentik ]
+  depends_on = [kubernetes_namespace.authentik]
 
   metadata {
-    name = "authentik-bootstrap-data"
+    name      = "authentik-bootstrap-data"
     namespace = var.authentik_namespace
   }
 
   data = {
-    AUTHENTIK_BOOTSTRAP_EMAIL = var.authentik_bootstrap_mail
+    AUTHENTIK_BOOTSTRAP_EMAIL    = var.authentik_bootstrap_mail
     AUTHENTIK_BOOTSTRAP_PASSWORD = var.authentik_bootstrap_pass
-    AUTHENTIK_BOOTSTRAP_TOKEN = var.authentik_bootstrap_token
+    AUTHENTIK_BOOTSTRAP_TOKEN    = var.authentik_bootstrap_token
   }
 }
 
 resource "kubernetes_config_map" "templates" {
 
   count      = var.deploy_authentik == true ? 1 : 0
-  depends_on = [ kubernetes_namespace.authentik ]
+  depends_on = [kubernetes_namespace.authentik]
 
   metadata {
-    name = "authentik-templates"
+    name      = "authentik-templates"
     namespace = var.authentik_namespace
   }
 
   data = {
     "account_confirmation.html" = "${file("${path.module}/templates/account_confirmation.html")}"
+    "mfa_reset.html"            = "${file("${path.module}/templates/mfa_reset.html")}"
+    "password_reset.html"       = "${file("${path.module}/templates/password_reset.html")}"
   }
 }
 
 resource "helm_release" "authentik" {
-  name       = var.authentik_name
-  count      = var.deploy_authentik == true ? 1 : 0
+  name  = var.authentik_name
+  count = var.deploy_authentik == true ? 1 : 0
 
-  depends_on = [ kubernetes_secret.bootstrap_data, kubernetes_config_map.templates ]
+  depends_on = [kubernetes_secret.bootstrap_data, kubernetes_config_map.templates]
 
   repository = "https://charts.goauthentik.io"
   chart      = "authentik"
   version    = var.chart_authentik_version
 
   create_namespace = true
-  namespace = var.authentik_namespace
+  namespace        = var.authentik_namespace
 
   values = [yamlencode(
     {
@@ -79,23 +81,23 @@ resource "helm_release" "authentik" {
         },
         log_level = var.authentik_log_level,
         postgresql = {
-          host = var.postgres_host,
-          port = var.postgres_port
-          name = var.authentik_db_name,
-          user = var.authentik_db_user,
+          host     = var.postgres_host,
+          port     = var.postgres_port
+          name     = var.authentik_db_name,
+          user     = var.authentik_db_user,
           password = var.authentik_db_pass,
         },
         redis = {
-          host = var.redis_host,
+          host     = var.redis_host,
           password = var.redis_pass
         },
         email = {
-          from = var.authentik_mail_from,
-          host = var.authentik_mail_host,
+          from     = var.authentik_mail_from,
+          host     = var.authentik_mail_host,
           password = var.authentik_mail_password,
-          port = var.authentik_mail_port,
-          use_ssl = var.authentik_mail_use_ssl,
-          use_tls = var.authentik_mail_use_tls,
+          port     = var.authentik_mail_port,
+          use_ssl  = var.authentik_mail_use_ssl,
+          use_tls  = var.authentik_mail_use_tls,
           username = var.authentik_mail_username
         }
       },
@@ -117,7 +119,7 @@ resource "helm_release" "authentik" {
       },
       ingress = {
         annotations = {
-          "kubernetes.io/tls-acme" = "true",
+          "kubernetes.io/tls-acme"         = "true",
           "cert-manager.io/cluster-issuer" = var.cm_issuer
         },
         enabled = true,
@@ -126,7 +128,7 @@ resource "helm_release" "authentik" {
             host = var.authentik_fqdn,
             paths = [
               {
-                path = "/",
+                path     = "/",
                 pathType = "Prefix"
               }
             ]
@@ -136,23 +138,23 @@ resource "helm_release" "authentik" {
         tls = [
           {
             hosts = [var.authentik_fqdn],
-            secretName: local.authentik_tls_secret_name
+            secretName : local.authentik_tls_secret_name
           }
         ]
       },
       volumeMounts = [
         {
-          name = var.authentik_blueprints_override_name,
+          name      = var.authentik_blueprints_override_name,
           mountPath = "/blueprints/default"
         },
         {
-          name = "authentik-email-templates",
+          name      = "authentik-email-templates",
           mountPath = "/templates"
         }
       ],
       volumes = [
         {
-          name = var.authentik_blueprints_override_name,
+          name     = var.authentik_blueprints_override_name,
           emptyDir = {}
         },
         {
