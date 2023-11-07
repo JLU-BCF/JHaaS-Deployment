@@ -221,10 +221,12 @@ module "authentik-config" {
   authentik_branding_publisher = var.authentik_branding_publisher
 
   # Mail Templating
-  authentik_email_subject_enrollment  = var.authentik_email_subject_enrollment
-  authentik_email_template_enrollment = var.authentik_email_template_enrollment
-  authentik_email_subject_recovery    = var.authentik_email_subject_recovery
-  authentik_email_template_recovery   = var.authentik_email_template_recovery
+  authentik_email_subject_enrollment    = var.authentik_email_subject_enrollment
+  authentik_email_template_enrollment   = var.authentik_email_template_enrollment
+  authentik_email_subject_recovery      = var.authentik_email_subject_recovery
+  authentik_email_template_recovery     = var.authentik_email_template_recovery
+  authentik_email_subject_mfa_recovery  = var.authentik_email_subject_mfa_recovery
+  authentik_email_template_mfa_recovery = var.authentik_email_template_mfa_recovery
 }
 
 output "authentik_token" {
