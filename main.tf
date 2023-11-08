@@ -206,7 +206,6 @@ module "authentik-config" {
   authentik_provider_redirect_uri = var.authentik_provider_redirect_uri
 
   # Flows configuration
-  authentik_jhaas_login_flow      = var.authentik_jhaas_login_flow
   authentik_flow_background       = var.authentik_flow_background
   authentik_tos_url               = var.authentik_tos_url
   authentik_jhaas_login_redirect  = var.authentik_jhaas_login_redirect
@@ -274,7 +273,7 @@ module "jhaas-portal" {
   jhaas_authentik_jupyter_hub_group   = var.jhaas_authentik_jupyter_hub_group
   jhaas_authentik_authentication_flow = var.jhaas_authentik_authentication_flow
   jhaas_authentik_authorization_flow  = var.jhaas_authentik_authorization_flow
-  jhaas_authentik_invalidation_flow   = "https://${var.authentik_fqdn}/if/flow/${var.jhaas_authentik_invalidation_flow}"
+  jhaas_authentik_invalidation_flow   = "https://${var.authentik_fqdn}/if/flow/${var.jhaas_authentik_invalidation_flow}/"
   jhaas_authentik_icon                = var.jhaas_authentik_icon
 
   jhaas_db_host = local.jhaas_db_host
