@@ -53,9 +53,24 @@ resource "kubernetes_config_map" "templates" {
   }
 
   data = {
-    "account_confirmation.html" = "${file("${path.module}/templates/account_confirmation.html")}"
-    "mfa_reset.html"            = "${file("${path.module}/templates/mfa_reset.html")}"
-    "password_reset.html"       = "${file("${path.module}/templates/password_reset.html")}"
+    for template in fileset("${path.module}/templates", "*.html") :
+    template => file(format("%s/%s", "${path.module}/templates", template))
+  }
+}
+
+resource "kubernetes_config_map" "assets" {
+
+  count      = var.deploy_authentik == true ? 1 : 0
+  depends_on = [kubernetes_namespace.authentik]
+
+  metadata {
+    name      = "authentik-assets"
+    namespace = var.authentik_namespace
+  }
+
+  binary_data = {
+    for asset in fileset("${path.module}/assets", "*") :
+    asset => filebase64(format("%s/%s", "${path.module}/assets", asset))
   }
 }
 
@@ -63,7 +78,11 @@ resource "helm_release" "authentik" {
   name  = var.authentik_name
   count = var.deploy_authentik == true ? 1 : 0
 
-  depends_on = [kubernetes_secret.bootstrap_data, kubernetes_config_map.templates]
+  depends_on = [
+    kubernetes_secret.bootstrap_data,
+    kubernetes_config_map.templates,
+    kubernetes_config_map.assets
+  ]
 
   repository = "https://charts.goauthentik.io"
   chart      = "authentik"
@@ -102,7 +121,21 @@ resource "helm_release" "authentik" {
         }
       },
       env = {
-        AUTHENTIK_REDIS__DB = 1
+        AUTHENTIK_REDIS__DB = 1,
+        AUTHENTIK_FOOTER_LINKS = jsonencode([
+          {
+            name = "Login",
+            href = "/if/flow/auth/"
+          },
+          {
+            name = "Password Reset",
+            href = "/if/flow/password-recovery/"
+          },
+          {
+            name = "MFA Reset",
+            href = "/if/flow/mfa-recovery/"
+          }
+        ])
       },
       envFrom = [
         {
@@ -150,6 +183,10 @@ resource "helm_release" "authentik" {
         {
           name      = "authentik-email-templates",
           mountPath = "/templates"
+        },
+        {
+          name      = "authentik-assets",
+          mountPath = "/web/dist/assets/custom"
         }
       ],
       volumes = [
@@ -161,6 +198,12 @@ resource "helm_release" "authentik" {
           name = "authentik-email-templates",
           configMap = {
             name = "authentik-templates"
+          }
+        },
+        {
+          name = "authentik-assets",
+          configMap = {
+            name = "authentik-assets"
           }
         }
       ]
