@@ -74,6 +74,21 @@ resource "kubernetes_config_map" "assets" {
   }
 }
 
+resource "kubernetes_config_map" "custom_css" {
+
+  count      = var.deploy_authentik == true ? 1 : 0
+  depends_on = [kubernetes_namespace.authentik]
+
+  metadata {
+    name      = "authentik-custom-css"
+    namespace = var.authentik_namespace
+  }
+
+  data = {
+    "custom.css" = "${file("${path.module}/custom.css")}"
+  }
+}
+
 resource "helm_release" "authentik" {
   name  = var.authentik_name
   count = var.deploy_authentik == true ? 1 : 0
@@ -81,7 +96,8 @@ resource "helm_release" "authentik" {
   depends_on = [
     kubernetes_secret.bootstrap_data,
     kubernetes_config_map.templates,
-    kubernetes_config_map.assets
+    kubernetes_config_map.assets,
+    kubernetes_config_map.custom_css
   ]
 
   repository = "https://charts.goauthentik.io"
@@ -187,6 +203,11 @@ resource "helm_release" "authentik" {
         {
           name      = "authentik-assets",
           mountPath = "/web/dist/assets/custom"
+        },
+        {
+          name      = "authentik-custom-css",
+          mountPath = "/web/dist/custom.css",
+          subPath   = "custom.css"
         }
       ],
       volumes = [
@@ -204,6 +225,12 @@ resource "helm_release" "authentik" {
           name = "authentik-assets",
           configMap = {
             name = "authentik-assets"
+          }
+        },
+        {
+          name = "authentik-custom-css",
+          configMap = {
+            name = "authentik-custom-css"
           }
         }
       ]

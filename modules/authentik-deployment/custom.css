@@ -1,0 +1,15 @@
+.pf-c-list.pf-m-inline.ak-flow-executor li.ak-flow-executor:not(:last-child) {
+  margin: 0 .75rem;
+}
+.pf-c-list.pf-m-inline.ak-flow-executor li.ak-flow-executor:last-child {
+	width: 100%;
+	text-align: center;
+	border-top: 1px solid var(--ak-dark-foreground-darker);
+	margin-top: .5rem;
+	padding-top: .5rem;
+	color: #fd4b2d;
+	font-weight: bold;
+}
+.pf-c-background-image__filter {
+	display: none;
+}
