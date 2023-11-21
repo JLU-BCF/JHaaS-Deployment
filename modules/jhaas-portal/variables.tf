@@ -127,6 +127,18 @@ variable "jhaas_authentik_invalidation_flow" {
   description = "value"
   default = "jhaas-logout"
 }
+variable "jhaas_authentik_config_totp" {
+  description = "value"
+}
+variable "jhaas_authentik_config_webauthn" {
+  description = "value"
+}
+variable "jhaas_authentik_config_static" {
+  description = "value"
+}
+variable "jhaas_authentik_config_password" {
+  description = "value"
+}
 variable "jhaas_authentik_icon" {
   description = "value"
   default = "/static/dist/assets/icons/icon.png"

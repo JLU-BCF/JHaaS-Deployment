@@ -157,7 +157,11 @@ resource "helm_release" "jhaas" {
         jupyter_hub_group   = var.jhaas_authentik_jupyter_hub_group,
         authentication_flow = var.jhaas_authentik_authentication_flow,
         authorization_flow  = var.jhaas_authentik_authorization_flow
-        invalidation_flow   = var.jhaas_authentik_invalidation_flow
+        invalidation_flow   = var.jhaas_authentik_invalidation_flow,
+        config_totp         = var.jhaas_authentik_config_totp,
+        config_webauthn     = var.jhaas_authentik_config_webauthn,
+        config_static       = var.jhaas_authentik_config_static,
+        config_password     = var.jhaas_authentik_config_password
       }
     }
   )]
