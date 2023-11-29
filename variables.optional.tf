@@ -336,7 +336,7 @@ variable "authentik_email_subject_enrollment" {
 }
 
 variable "authentik_email_template_enrollment" {
-  default = "email/account_confirmation.html"
+  default = "account_confirmation.html"
 }
 
 variable "authentik_email_subject_recovery" {
@@ -344,7 +344,7 @@ variable "authentik_email_subject_recovery" {
 }
 
 variable "authentik_email_template_recovery" {
-  default = "email/password_reset.html"
+  default = "password_reset.html"
 }
 
 variable "authentik_email_subject_mfa_recovery" {
@@ -365,11 +365,11 @@ variable "jhaas_image_credentials" {
 }
 variable "jhaas_backend_image_name" {
   description = "value"
-  default     = "harbor.computational.bio.uni-giessen.de/bcf/portal-backend:master"
+  default     = "harbor.computational.bio.uni-giessen.de/jhaas/portal-backend:master"
 }
 variable "jhaas_frontend_image_name" {
   description = "value"
-  default     = "harbor.computational.bio.uni-giessen.de/bcf/portal-frontend:master"
+  default     = "harbor.computational.bio.uni-giessen.de/jhaas/portal-frontend:master"
 }
 variable "deploy_jhaas" {
   description = "value"
