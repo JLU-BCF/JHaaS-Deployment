@@ -274,10 +274,10 @@ module "jhaas-portal" {
   jhaas_authentik_authentication_flow = var.jhaas_authentik_authentication_flow
   jhaas_authentik_authorization_flow  = var.jhaas_authentik_authorization_flow
   jhaas_authentik_invalidation_flow   = "https://${var.authentik_fqdn}/if/flow/${var.jhaas_authentik_invalidation_flow}/"
-  jhaas_authentik_config_totp         = module.authentik-config.totp_configuration_id
-  jhaas_authentik_config_webauthn     = module.authentik-config.webauthn_configuration_id
-  jhaas_authentik_config_static       = module.authentik-config.mfa_static_configuration_id
-  jhaas_authentik_config_password     = module.authentik-config.password_configuration_id
+  jhaas_authentik_config_totp         = module.authentik-config[0].totp_configuration_id
+  jhaas_authentik_config_webauthn     = module.authentik-config[0].webauthn_configuration_id
+  jhaas_authentik_config_static       = module.authentik-config[0].mfa_static_configuration_id
+  jhaas_authentik_config_password     = module.authentik-config[0].password_configuration_id
   jhaas_authentik_icon                = var.jhaas_authentik_icon
 
   jhaas_db_host = local.jhaas_db_host
