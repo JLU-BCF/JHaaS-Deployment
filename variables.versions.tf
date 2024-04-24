@@ -35,9 +35,3 @@ variable "chart_jhaas_version" {
   description = "value"
   default     = null
 }
-
-# JHaaS User Docs
-variable "chart_jhaas_user_docs_version" {
-  description = "value"
-  default     = null
-}

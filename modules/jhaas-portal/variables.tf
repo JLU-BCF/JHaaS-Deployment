@@ -249,3 +249,16 @@ variable "jhaas_oidc_client_id" {
 variable "jhaas_oidc_client_secret" {
   description = "value"
 }
+
+###########
+# DOCS
+###########
+variable "jhaas_docs_enabled" {
+  description = "value"
+}
+variable "jhaas_docs_image_name" {
+  description = "value"
+}
+variable "jhaas_docs_path" {
+  description = "value"
+}

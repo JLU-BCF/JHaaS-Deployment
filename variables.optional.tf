@@ -524,27 +524,20 @@ variable "jhaas_s3_bucket_jh_specs" {
   description = "value"
   default     = "jh-specs"
 }
-
-###############
-# JHaaS User Docs
-###############
-variable "deploy_jhaas_user_docs" {
+# JHaaS Docs
+variable "jhaas_docs_enabled" {
   description = "value"
-  default     = true
+  default = true
 }
-variable "jhaas_user_docs_cm_issuer" {
-  description = "Set if it differs"
-  default     = null
-}
-variable "jhaas_user_docs_name" {
+variable "jhaas_docs_image_name" {
   description = "value"
-  default     = "jhaas-user-docs"
+  default = "harbor.computational.bio.uni-giessen.de/jhaas/user:master"
 }
-variable "jhaas_user_docs_namespace" {
+variable "jhaas_docs_path" {
   description = "value"
-  default     = "jhaas-user-docs"
+  default = "/docs"
 }
-variable "jhaas_user_docs_image_name" {
+variable "jhaas_docs_address" {
   description = "value"
-  default     = "harbor.computational.bio.uni-giessen.de/jhaas/user:master"
+  default = null
 }

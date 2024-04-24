@@ -20,13 +20,6 @@ variable "portal_fqdn" {
 }
 
 ###############
-# User Docs
-###############
-variable "jhaas_user_docs_fqdn" {
-  description = "FQDN for the user documentation"
-}
-
-###############
 # JUPYTER-HUBS
 ###############
 variable "jupyterhubs_base_fqdn" {

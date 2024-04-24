@@ -67,6 +67,9 @@ locals {
 
   jhaas_mail_feedback_address = var.jhaas_mail_feedback_address == null ? local.jhaas_mail_from : var.jhaas_mail_feedback_address
 
+  # docs
+  jhaas_docs_address  = var.jhaas_docs_address == null ? "${var.jhaas_docs_path}/" : var.jhaas_docs_address
+
   # generated overrides
   jhaas_db_pass    = var.jhaas_db_pass == null ? random_password.jhaas_db_pass.result : var.jhaas_db_pass
   jhaas_redis_pass = var.jhaas_redis_pass == null ? random_password.redis_pass.result : var.jhaas_redis_pass
@@ -83,11 +86,6 @@ locals {
   jhaas_s3_host       = var.jhaas_s3_host == null ? local.minio_url : var.jhaas_s3_host
   jhaas_s3_access_key = var.jhaas_s3_access_key == null ? random_pet.minio_user.id : var.jhaas_s3_access_key
   jhaas_s3_secret_key = var.jhaas_s3_secret_key == null ? random_password.minio_pass.result : var.jhaas_s3_secret_key
-}
-
-# jhaas user docs
-locals {
-  jhaas_user_docs_cm_issuer = var.jhaas_user_docs_cm_issuer == null ? var.cm_issuer : var.jhaas_user_docs_cm_issuer
 }
 
 module "basics" {
@@ -260,7 +258,7 @@ module "jhaas-portal" {
   jhaas_backend_jh_domain     = var.jupyterhubs_base_fqdn
   jhaas_k8s_tf_image          = var.jhaas_k8s_tf_image
   jhaas_frontend_url          = local.portal_url
-  jhaas_docs_address          = "https://${var.jhaas_user_docs_fqdn}"
+  jhaas_docs_address          = local.jhaas_docs_address
   jhaas_session_cookie_secret = "[${random_password.jhaas_session_secret_1.result}, ${random_password.jhaas_session_secret_2.result}]"
   jhaas_redis_url             = "redis://default:${local.jhaas_redis_pass}@${local.jhaas_redis_url}/0"
   jhaas_redis_pass            = null
@@ -308,17 +306,8 @@ module "jhaas-portal" {
   jhaas_oidc_callback_url  = "${local.portal_url}api/auth/oidc/cb"
   jhaas_oidc_client_id     = var.authentik_jhaas_client_id
   jhaas_oidc_client_secret = random_password.jhaas_client_secret.result
-}
 
-module "jhaas-user-docs" {
-  source = "./modules/jhaas-user-docs"
-
-  count = var.deploy_jhaas_user_docs ? 1 : 0
-
-  jhaas_user_docs_fqdn          = var.jhaas_user_docs_fqdn
-  jhaas_user_docs_cm_issuer     = local.jhaas_user_docs_cm_issuer
-  jhaas_user_docs_name          = var.jhaas_user_docs_name
-  jhaas_user_docs_namespace     = var.jhaas_user_docs_namespace
-  chart_jhaas_user_docs_version = var.chart_jhaas_user_docs_version
-  jhaas_user_docs_image_name    = var.jhaas_user_docs_image_name
+  jhaas_docs_enabled    = var.jhaas_docs_enabled
+  jhaas_docs_image_name = var.jhaas_docs_image_name
+  jhaas_docs_path       = var.jhaas_docs_path
 }
