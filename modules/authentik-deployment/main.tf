@@ -137,23 +137,29 @@ resource "helm_release" "authentik" {
         }
       },
       global = {
-        env = {
-          AUTHENTIK_REDIS__DB = 1,
-          AUTHENTIK_FOOTER_LINKS = jsonencode([
-            {
-              name = "Login",
-              href = "/if/flow/auth/"
-            },
-            {
-              name = "Password Reset",
-              href = "/if/flow/password-recovery/"
-            },
-            {
-              name = "MFA Reset",
-              href = "/if/flow/mfa-recovery/"
-            }
-          ])
-        },
+        env = [
+          {
+            name = "AUTHENTIK_REDIS__DB",
+            value = "1"
+          },
+          {
+            name = "AUTHENTIK_FOOTER_LINKS",
+            value = jsonencode([
+              {
+                name = "Login",
+                href = "/if/flow/auth/"
+              },
+              {
+                name = "Password Reset",
+                href = "/if/flow/password-recovery/"
+              },
+              {
+                name = "MFA Reset",
+                href = "/if/flow/mfa-recovery/"
+              }
+            ])
+          }
+        ],
         envFrom = [
           {
             secretRef = {
@@ -219,16 +225,12 @@ resource "helm_release" "authentik" {
           },
           enabled = true,
           hosts = [
-            {
-              host = var.authentik_fqdn,
-              paths = [
-                {
-                  path     = "/",
-                  pathType = "Prefix"
-                }
-              ]
-            }
+            var.authentik_fqdn
           ],
+          paths = [
+            "/"
+          ],
+          pathType = "Prefix",
           ingressClassName = "nginx",
           tls = [
             {
