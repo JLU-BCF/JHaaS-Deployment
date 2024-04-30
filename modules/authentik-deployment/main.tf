@@ -136,104 +136,108 @@ resource "helm_release" "authentik" {
           username = var.authentik_mail_username
         }
       },
-      env = {
-        AUTHENTIK_REDIS__DB = 1,
-        AUTHENTIK_FOOTER_LINKS = jsonencode([
+      global = {
+        env = {
+          AUTHENTIK_REDIS__DB = 1,
+          AUTHENTIK_FOOTER_LINKS = jsonencode([
+            {
+              name = "Login",
+              href = "/if/flow/auth/"
+            },
+            {
+              name = "Password Reset",
+              href = "/if/flow/password-recovery/"
+            },
+            {
+              name = "MFA Reset",
+              href = "/if/flow/mfa-recovery/"
+            }
+          ])
+        },
+        envFrom = [
           {
-            name = "Login",
-            href = "/if/flow/auth/"
-          },
-          {
-            name = "Password Reset",
-            href = "/if/flow/password-recovery/"
-          },
-          {
-            name = "MFA Reset",
-            href = "/if/flow/mfa-recovery/"
+            secretRef = {
+              name = "authentik-bootstrap-data"
+            }
           }
-        ])
+        ],
+        volumeMounts = [
+          {
+            name      = var.authentik_blueprints_override_name,
+            mountPath = "/blueprints/default"
+          },
+          {
+            name      = "authentik-email-templates",
+            mountPath = "/templates"
+          },
+          {
+            name      = "authentik-assets",
+            mountPath = "/web/dist/assets/custom"
+          },
+          {
+            name      = "authentik-custom-css",
+            mountPath = "/web/dist/custom.css",
+            subPath   = "custom.css"
+          }
+        ],
+        volumes = [
+          {
+            name     = var.authentik_blueprints_override_name,
+            emptyDir = {}
+          },
+          {
+            name = "authentik-email-templates",
+            configMap = {
+              name = "authentik-templates"
+            }
+          },
+          {
+            name = "authentik-assets",
+            configMap = {
+              name = "authentik-assets"
+            }
+          },
+          {
+            name = "authentik-custom-css",
+            configMap = {
+              name = "authentik-custom-css"
+            }
+          }
+        ]
       },
-      envFrom = [
-        {
-          secretRef = {
-            name = "authentik-bootstrap-data"
-          }
-        }
-      ],
       postgresql = {
         enabled = false
       },
       redis = {
         enabled = false
       },
-      ingress = {
-        annotations = {
-          "kubernetes.io/tls-acme"         = "true",
-          "cert-manager.io/cluster-issuer" = var.cm_issuer
-        },
-        enabled = true,
-        hosts = [
-          {
-            host = var.authentik_fqdn,
-            paths = [
-              {
-                path     = "/",
-                pathType = "Prefix"
-              }
-            ]
-          }
-        ],
-        ingressClassName = "nginx",
-        tls = [
-          {
-            hosts = [var.authentik_fqdn],
-            secretName : local.authentik_tls_secret_name
-          }
-        ]
-      },
-      volumeMounts = [
-        {
-          name      = var.authentik_blueprints_override_name,
-          mountPath = "/blueprints/default"
-        },
-        {
-          name      = "authentik-email-templates",
-          mountPath = "/templates"
-        },
-        {
-          name      = "authentik-assets",
-          mountPath = "/web/dist/assets/custom"
-        },
-        {
-          name      = "authentik-custom-css",
-          mountPath = "/web/dist/custom.css",
-          subPath   = "custom.css"
+      server = {
+        ingress = {
+          annotations = {
+            "kubernetes.io/tls-acme"         = "true",
+            "cert-manager.io/cluster-issuer" = var.cm_issuer
+          },
+          enabled = true,
+          hosts = [
+            {
+              host = var.authentik_fqdn,
+              paths = [
+                {
+                  path     = "/",
+                  pathType = "Prefix"
+                }
+              ]
+            }
+          ],
+          ingressClassName = "nginx",
+          tls = [
+            {
+              hosts = [var.authentik_fqdn],
+              secretName : local.authentik_tls_secret_name
+            }
+          ]
         }
-      ],
-      volumes = [
-        {
-          name     = var.authentik_blueprints_override_name,
-          emptyDir = {}
-        },
-        {
-          name = "authentik-email-templates",
-          configMap = {
-            name = "authentik-templates"
-          }
-        },
-        {
-          name = "authentik-assets",
-          configMap = {
-            name = "authentik-assets"
-          }
-        },
-        {
-          name = "authentik-custom-css",
-          configMap = {
-            name = "authentik-custom-css"
-          }
-        }
-      ]
+      }
     }
   )]
 }
