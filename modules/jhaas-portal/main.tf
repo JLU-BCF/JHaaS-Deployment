@@ -125,6 +125,8 @@ resource "helm_release" "jhaas" {
         host             = var.jhaas_mail_host
         port             = var.jhaas_mail_port
         secure           = var.jhaas_mail_secure
+        user             = var.jhaas_mail_username
+        pass             = var.jhaas_mail_password
         from             = var.jhaas_mail_from
         from_name        = var.jhaas_mail_from_name
         copy_addresses   = var.jhaas_mail_copy_addresses

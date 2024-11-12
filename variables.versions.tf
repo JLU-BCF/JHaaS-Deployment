@@ -38,5 +38,7 @@ variable "chart_jhaas_version" {
 
 variable "chart_jupyterhub_version" {
   description = "value"
-  default     = null
+  # default must not be null as this variable will not be used
+  # within this tf config but it will be passed through helm!
+  default     = ""
 }

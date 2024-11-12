@@ -186,6 +186,14 @@ variable "jhaas_mail_secure" {
   description = "value"
   default = false
 }
+variable "jhaas_mail_username" {
+  description = "value"
+  default     = null
+}
+variable "jhaas_mail_password" {
+  description = "value"
+  default     = null
+}
 variable "jhaas_mail_from" {
   description = "value"
   default = ""

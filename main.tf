@@ -62,6 +62,8 @@ locals {
   jhaas_mail_host      = var.jhaas_mail_host == null ? var.mail_host : var.jhaas_mail_host
   jhaas_mail_port      = var.jhaas_mail_port == null ? var.mail_port : var.jhaas_mail_port
   jhaas_mail_secure    = var.jhaas_mail_secure == null ? var.mail_ssl || var.mail_tls : var.jhaas_mail_secure
+  jhaas_mail_username  = var.jhaas_mail_username == null ? var.mail_username : var.jhaas_mail_username
+  jhaas_mail_password  = var.jhaas_mail_password == null ? var.mail_password : var.jhaas_mail_password
   jhaas_mail_from      = var.jhaas_mail_from == null ? var.mail_from : var.jhaas_mail_from
   jhaas_mail_from_name = var.jhaas_mail_from_name == null ? var.mail_from_name : var.jhaas_mail_from_name
 
@@ -285,10 +287,11 @@ module "jhaas-portal" {
   jhaas_db_user = var.jhaas_db_user
   jhaas_db_pass = local.jhaas_db_pass
 
-  # Mail (omitted for now)
   jhaas_mail_host             = local.jhaas_mail_host
   jhaas_mail_port             = local.jhaas_mail_port
   jhaas_mail_secure           = local.jhaas_mail_secure
+  jhaas_mail_username         = local.jhaas_mail_username
+  jhaas_mail_password         = local.jhaas_mail_password
   jhaas_mail_from             = local.jhaas_mail_from
   jhaas_mail_from_name        = local.jhaas_mail_from_name
   jhaas_mail_copy_addresses   = var.jhaas_mail_copy_addresses
