@@ -56,9 +56,10 @@ resource "helm_release" "jhaas" {
   values = [yamlencode(
     {
       jhaas = {
-        domain = var.jhaas_portal_fqdn
-        issuer = var.cm_issuer_hubs
-        icon   = var.jhaas_authentik_icon
+        domain           = var.jhaas_portal_fqdn
+        issuer           = var.cm_issuer_hubs
+        icon             = var.jhaas_authentik_icon
+        jh_chart_version = var.chart_jupyterhub_version
       }
       imageCredentials = var.image_credentials
       backend = {

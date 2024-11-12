@@ -34,6 +34,11 @@ variable "chart_jhaas_version" {
   default = null
 }
 
+variable "chart_jupyterhub_version" {
+  description = "value"
+  default = null
+}
+
 variable "jhaas_portal_fqdn" {
   description = "value"
 }

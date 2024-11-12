@@ -244,9 +244,10 @@ module "jhaas-portal" {
   cm_issuer       = local.jhaas_cm_issuer
   cm_issuer_hubs  = local.jhaas_cm_issuer_hubs
 
-  image_credentials   = var.jhaas_image_credentials
-  backend_image_name  = var.jhaas_backend_image_name
-  frontend_image_name = var.jhaas_frontend_image_name
+  image_credentials        = var.jhaas_image_credentials
+  backend_image_name       = var.jhaas_backend_image_name
+  frontend_image_name      = var.jhaas_frontend_image_name
+  chart_jupyterhub_version = var.chart_jupyterhub_version
 
   deploy_jhaas           = var.deploy_jhaas
   create_jhaas_namespace = var.create_jhaas_namespace
@@ -271,7 +272,7 @@ module "jhaas-portal" {
   jhaas_authentik_jupyter_hub_group   = var.jhaas_authentik_jupyter_hub_group
   jhaas_authentik_authentication_flow = var.jhaas_authentik_authentication_flow
   jhaas_authentik_authorization_flow  = var.jhaas_authentik_authorization_flow
-  jhaas_authentik_invalidation_flow   = "https://${var.authentik_fqdn}/if/flow/${var.jhaas_authentik_invalidation_flow}/"
+  jhaas_authentik_invalidation_flow   = var.jhaas_authentik_invalidation_flow
   jhaas_authentik_config_totp         = var.configure_authentik ? module.authentik-config[0].totp_configuration_id : null
   jhaas_authentik_config_webauthn     = var.configure_authentik ? module.authentik-config[0].webauthn_configuration_id : null
   jhaas_authentik_config_static       = var.configure_authentik ? module.authentik-config[0].mfa_static_configuration_id : null
