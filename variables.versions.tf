@@ -38,5 +38,5 @@ variable "chart_jhaas_version" {
 
 variable "chart_jupyterhub_version" {
   description = "value"
-  default     = "3.3.8"
+  default     = null
 }
