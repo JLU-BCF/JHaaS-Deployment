@@ -241,24 +241,24 @@ resource "helm_release" "authentik" {
         },
         resources = {
           requests = {
-            cpu = 100m,
-            memory = 512Mi
+            cpu = "100m",
+            memory = "512Mi"
           },
           limits = {
-            cpu = 2,
-            memory = 2048Mi
+            cpu = "2",
+            memory = "2048Mi"
           }
         }
       },
       worker = {
         resources = {
           requests = {
-            cpu = 100m,
-            memory = 512Mi
+            cpu = "100m",
+            memory = "512Mi"
           },
           limits = {
-            cpu = 2,
-            memory = 2048Mi
+            cpu = "2",
+            memory = "2048Mi"
           }
         }
       }

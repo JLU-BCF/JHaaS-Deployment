@@ -23,16 +23,16 @@ resource "helm_release" "minio" {
       },
       defaultBuckets = var.minio_buckets,
       persistence = {
-        size = 8Gi
+        size = "8Gi"
       },
       resources = {
         requests = {
-          cpu = 100m,
-          memory = 256Mi
+          cpu = "100m",
+          memory = "256Mi"
         },
         limits = {
-          cpu = 2,
-          memory = 1024Mi
+          cpu = "2",
+          memory = "1024Mi"
         }
       }
     }
