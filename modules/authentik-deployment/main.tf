@@ -238,6 +238,28 @@ resource "helm_release" "authentik" {
               secretName : local.authentik_tls_secret_name
             }
           ]
+        },
+        resources = {
+          requests = {
+            cpu = 100m,
+            memory = 512Mi
+          },
+          limits = {
+            cpu = 2,
+            memory = 2048Mi
+          }
+        }
+      },
+      worker = {
+        resources = {
+          requests = {
+            cpu = 100m,
+            memory = 512Mi
+          },
+          limits = {
+            cpu = 2,
+            memory = 2048Mi
+          }
         }
       }
     }

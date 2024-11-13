@@ -43,6 +43,19 @@ resource "helm_release" "postgres" {
               EOSQL
             SEED_DB
           }
+        },
+        persistence = {
+          size = 8Gi
+        },
+        resources = {
+          requests = {
+            cpu = 100m,
+            memory = 256Mi
+          },
+          limits = {
+            cpu = 2,
+            memory = 1024Mi
+          }
         }
       }
     }

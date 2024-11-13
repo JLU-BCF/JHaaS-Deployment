@@ -22,6 +22,21 @@ resource "helm_release" "redis" {
         enabled = true,
         password = var.redis_pass
       },
+      master = {
+        persistence = {
+          size = 8Gi
+        },
+        resources = {
+          requests = {
+            cpu = 100m,
+            memory = 256Mi
+          },
+          limits = {
+            cpu = 2,
+            memory = 1024Mi
+          }
+        }
+      },
       sentinel = {
         enabled = false
       }
