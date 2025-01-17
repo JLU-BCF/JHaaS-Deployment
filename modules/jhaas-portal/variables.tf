@@ -279,7 +279,7 @@ variable "jhaas_docs_path" {
 ###########
 # NOTEBOOK DATA S3
 ###########
-variable "datashim_namespace" {
+variable "jhaas_s3_data_secret_namespace" {
   description = "value"
   default     = "datashim"
 }
