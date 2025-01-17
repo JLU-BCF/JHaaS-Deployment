@@ -90,6 +90,13 @@ locals {
   jhaas_s3_secret_key = var.jhaas_s3_secret_key == null ? random_password.minio_pass.result : var.jhaas_s3_secret_key
 }
 
+# notebook data s3
+locals {
+  jhaas_s3_data_host       = var.jhaas_s3_data_host       == null ? local.minio_url : var.jhaas_s3_data_host
+  jhaas_s3_data_access_key = var.jhaas_s3_data_access_key == null ? random_pet.minio_user.id : var.jhaas_s3_data_access_key
+  jhaas_s3_data_secret_key = var.jhaas_s3_data_secret_key == null ? random_password.minio_pass.result : var.jhaas_s3_data_secret_key
+}
+
 module "basics" {
   source = "./modules/basics"
 
@@ -135,6 +142,18 @@ module "basics" {
   minio_user          = random_pet.minio_user.id
   minio_pass          = random_password.minio_pass.result
   minio_buckets       = var.minio_buckets
+
+  deploy_datashim        = var.deploy_datashim
+  chart_datashim_version = var.chart_datashim_version
+  datashim_namespace     = var.datashim_namespace
+  datashim_name          = var.datashim_name
+
+  jhaas_s3_data_secret_name = var.jhaas_s3_data_secret_name
+  jhaas_s3_data_host        = local.jhaas_s3_data_host
+  jhaas_s3_data_port        = var.jhaas_s3_data_port
+  jhaas_s3_data_ssl         = var.jhaas_s3_data_ssl
+  jhaas_s3_data_access_key  = local.jhaas_s3_data_access_key
+  jhaas_s3_data_secret_key  = local.jhaas_s3_data_secret_key
 }
 
 module "authentik-deployment" {
@@ -305,6 +324,14 @@ module "jhaas-portal" {
   jhaas_s3_api             = var.jhaas_s3_api
   jhaas_s3_bucket_tf_state = var.jhaas_s3_bucket_tf_state
   jhaas_s3_bucket_jh_specs = var.jhaas_s3_bucket_jh_specs
+
+  datashim_namespace            = var.datashim_namespace
+  jhaas_s3_data_secret_name     = var.jhaas_s3_data_secret_name
+  jhaas_s3_data_host            = local.jhaas_s3_data_host
+  jhaas_s3_data_port            = var.jhaas_s3_data_port
+  jhaas_s3_data_ssl             = var.jhaas_s3_data_ssl
+  jhaas_s3_data_access_key      = local.jhaas_s3_data_access_key
+  jhaas_s3_data_secret_key      = local.jhaas_s3_data_secret_key
 
   jhaas_oidc_endpoint      = "${local.authentik_url}application/o/portal"
   jhaas_oidc_callback_url  = "${local.portal_url}api/auth/oidc/cb"

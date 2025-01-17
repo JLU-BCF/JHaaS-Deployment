@@ -144,6 +144,15 @@ resource "helm_release" "jhaas" {
           jh_specs = var.jhaas_s3_bucket_jh_specs
         }
       }
+      s3_data = {
+        datashim_ns = var.datashim_namespace
+        secret_name = var.jhaas_s3_data_secret_name
+        host        = var.jhaas_s3_data_host
+        port        = var.jhaas_s3_data_port
+        ssl         = var.jhaas_s3_data_ssl
+        access_key  = var.jhaas_s3_data_access_key
+        secret_key  = var.jhaas_s3_data_secret_key
+      }
       oidc = {
         endpoint           = var.jhaas_oidc_endpoint
         callback_url       = var.jhaas_oidc_callback_url

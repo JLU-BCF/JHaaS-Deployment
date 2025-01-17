@@ -212,7 +212,7 @@ variable "jhaas_mail_feedback_address" {
 }
 
 ###########
-# S3
+# SYSTEM S3
 ###########
 variable "jhaas_s3_host" {
   description = "value"
@@ -274,4 +274,36 @@ variable "jhaas_docs_image_name" {
 }
 variable "jhaas_docs_path" {
   description = "value"
+}
+
+###########
+# NOTEBOOK DATA S3
+###########
+variable "datashim_namespace" {
+  description = "value"
+  default     = "datashim"
+}
+variable "jhaas_s3_data_secret_name" {
+  description = "value"
+  default     = "jhaas-s3-data-conf"
+}
+variable "jhaas_s3_data_host" {
+  description = "value"
+  default     = null
+}
+variable "jhaas_s3_data_port" {
+  description = "value"
+  default     = "9000"
+}
+variable "jhaas_s3_data_ssl" {
+  description = "value"
+  default     = false
+}
+variable "jhaas_s3_data_access_key" {
+  description = "value"
+  default     = null
+}
+variable "jhaas_s3_data_secret_key" {
+  description = "value"
+  default     = null
 }

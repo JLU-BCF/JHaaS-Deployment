@@ -124,6 +124,53 @@ variable "minio_buckets" {
 }
 
 ###############
+# DATASHIM
+###############
+variable "deploy_datashim" {
+  description = "value"
+  default     = true
+}
+
+variable "datashim_namespace" {
+  description = "value"
+  default     = "datashim"
+}
+
+variable "datashim_name" {
+  description = "value"
+  default     = "datashim"
+}
+# S3 for Notebook Data
+variable "jhaas_s3_data_secret_name" {
+  description = "value"
+  default     = "jhaas-s3-data-conf"
+}
+variable "jhaas_s3_data_host" {
+  description = "value"
+  default     = null
+}
+
+variable "jhaas_s3_data_port" {
+  description = "value"
+  default     = "9000"
+}
+
+variable "jhaas_s3_data_ssl" {
+  description = "value"
+  default     = false
+}
+
+variable "jhaas_s3_data_access_key" {
+  description = "value"
+  default     = null
+}
+
+variable "jhaas_s3_data_secret_key" {
+  description = "value"
+  default     = null
+}
+
+###############
 # AUTHENTIK
 ###############
 variable "authentik_kubeconfig" {
@@ -499,7 +546,7 @@ variable "jhaas_mail_feedback_address" {
   description = "value"
   default     = null
 }
-# JHaaS S3
+# JHaaS System S3
 variable "jhaas_s3_host" {
   description = "value"
   default     = null

@@ -28,6 +28,10 @@ variable "chart_redis_version" {
   description = "value"
   default = null
 }
+variable "chart_datashim_version" {
+  description = "value"
+  default = null
+}
 
 ###############
 # CERT-MANAGER
@@ -177,4 +181,55 @@ variable "minio_pass" {
 variable "minio_buckets" {
   description = "comma-seperated list of buckets"
   default = "tf-state,jh-specs"
+}
+
+###############
+# DATASHIM
+###############
+variable "deploy_datashim" {
+  description = "value"
+  default = true
+}
+
+variable "datashim_namespace" {
+  description = "value"
+  default = "datashim"
+}
+
+variable "datashim_name" {
+  description = "value"
+  default = "datashim"
+}
+
+variable "jhaas_s3_data_secret_name" {
+  description = "value"
+  default = "jhaas-s3-data-conf"
+}
+
+###############
+# S3 DATA SECRET FOR DATASHIM
+###############
+variable "jhaas_s3_data_host" {
+  description = "value"
+  default     = null
+}
+
+variable "jhaas_s3_data_port" {
+  description = "value"
+  default     = null
+}
+
+variable "jhaas_s3_data_ssl" {
+  description = "value"
+  default     = null
+}
+
+variable "jhaas_s3_data_access_key" {
+  description = "value"
+  default     = null
+}
+
+variable "jhaas_s3_data_secret_key" {
+  description = "value"
+  default     = null
 }

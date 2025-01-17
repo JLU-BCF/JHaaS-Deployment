@@ -23,6 +23,10 @@ variable "chart_redis_version" {
   description = "value"
   default     = null
 }
+variable "chart_datashim_version" {
+  description = "value"
+  default     = null
+}
 
 # Authentik-Deployment
 variable "chart_authentik_version" {
