@@ -70,7 +70,7 @@ locals {
   jhaas_mail_feedback_address = var.jhaas_mail_feedback_address == null ? local.jhaas_mail_from : var.jhaas_mail_feedback_address
 
   # docs
-  jhaas_docs_address  = var.jhaas_docs_address == null ? "${var.jhaas_docs_path}/" : var.jhaas_docs_address
+  jhaas_docs_address = var.jhaas_docs_address == null ? "${var.jhaas_docs_path}/" : var.jhaas_docs_address
 
   # generated overrides
   jhaas_db_pass    = var.jhaas_db_pass == null ? random_password.jhaas_db_pass.result : var.jhaas_db_pass
@@ -92,7 +92,7 @@ locals {
 
 # notebook data s3
 locals {
-  jhaas_s3_data_host       = var.jhaas_s3_data_host       == null ? local.minio_url : var.jhaas_s3_data_host
+  jhaas_s3_data_host       = var.jhaas_s3_data_host == null ? local.minio_url : var.jhaas_s3_data_host
   jhaas_s3_data_access_key = var.jhaas_s3_data_access_key == null ? random_pet.minio_user.id : var.jhaas_s3_data_access_key
   jhaas_s3_data_secret_key = var.jhaas_s3_data_secret_key == null ? random_password.minio_pass.result : var.jhaas_s3_data_secret_key
 }
@@ -325,13 +325,13 @@ module "jhaas-portal" {
   jhaas_s3_bucket_tf_state = var.jhaas_s3_bucket_tf_state
   jhaas_s3_bucket_jh_specs = var.jhaas_s3_bucket_jh_specs
 
-  datashim_namespace            = var.datashim_namespace
-  jhaas_s3_data_secret_name     = var.jhaas_s3_data_secret_name
-  jhaas_s3_data_host            = local.jhaas_s3_data_host
-  jhaas_s3_data_port            = var.jhaas_s3_data_port
-  jhaas_s3_data_ssl             = var.jhaas_s3_data_ssl
-  jhaas_s3_data_access_key      = local.jhaas_s3_data_access_key
-  jhaas_s3_data_secret_key      = local.jhaas_s3_data_secret_key
+  datashim_namespace        = var.datashim_namespace
+  jhaas_s3_data_secret_name = var.jhaas_s3_data_secret_name
+  jhaas_s3_data_host        = local.jhaas_s3_data_host
+  jhaas_s3_data_port        = var.jhaas_s3_data_port
+  jhaas_s3_data_ssl         = var.jhaas_s3_data_ssl
+  jhaas_s3_data_access_key  = local.jhaas_s3_data_access_key
+  jhaas_s3_data_secret_key  = local.jhaas_s3_data_secret_key
 
   jhaas_oidc_endpoint      = "${local.authentik_url}application/o/portal"
   jhaas_oidc_callback_url  = "${local.portal_url}api/auth/oidc/cb"

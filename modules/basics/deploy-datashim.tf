@@ -3,8 +3,8 @@
 resource "helm_release" "datashim" {
   count = var.deploy_datashim == true ? 1 : 0
 
-  name       = var.datashim_name
-  atomic = true
+  name            = var.datashim_name
+  atomic          = true
   cleanup_on_fail = true
 
   repository = "https://datashim-io.github.io/datashim"
@@ -12,7 +12,7 @@ resource "helm_release" "datashim" {
   version    = var.chart_datashim_version
 
   create_namespace = true
-  namespace = var.datashim_namespace
+  namespace        = var.datashim_namespace
 
   values = [yamlencode(
     {
@@ -23,40 +23,40 @@ resource "helm_release" "datashim" {
           images = {
             externalAttacher = {
               image = "csi-attacher",
-              tag = "v4.7.0"
+              tag   = "v4.7.0"
             },
             nodeDriverRegistrar = {
               image = "csi-node-driver-registrar",
-              tag = "v2.12.0"
+              tag   = "v2.12.0"
             },
             externalProvisioner = {
               image = "csi-provisioner",
-              tag = "v5.1.0"
+              tag   = "v5.1.0"
             }
           }
         }
       },
       csi-nfs-chart = {
-        enabled= false
+        enabled = false
       },
       csi-s3-chart = {
         enabled = true,
         csis3 = {
           image = "csi-s3",
-          tag = "latest"
+          tag   = "latest"
         }
       },
       csi-h3-chart = {
-        enabled= false
+        enabled = false
       },
       dataset-operator-chart = {
         generatekeys = {
           image = "generate-keys",
-          tag = "latest"
+          tag   = "latest"
         },
         datasetoperator = {
           image = "dataset-operator",
-          tag = "latest"
+          tag   = "latest"
         }
       }
     }
@@ -65,7 +65,7 @@ resource "helm_release" "datashim" {
 
 # Deploy s3 data secret for use with datashim
 resource "kubernetes_secret" "jhaas-s3-data-conf" {
-  depends_on = [ helm_release.datashim ]
+  depends_on = [helm_release.datashim]
 
   metadata {
     name      = var.jhaas_s3_data_secret_name

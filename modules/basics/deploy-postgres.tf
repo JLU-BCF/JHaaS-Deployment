@@ -3,8 +3,8 @@
 resource "helm_release" "postgres" {
   count = var.deploy_postgres == true ? 1 : 0
 
-  name       = var.postgres_name
-  atomic = true
+  name            = var.postgres_name
+  atomic          = true
   cleanup_on_fail = true
 
   repository = "https://charts.bitnami.com/bitnami"
@@ -12,7 +12,7 @@ resource "helm_release" "postgres" {
   version    = var.chart_postgres_version
 
   create_namespace = true
-  namespace = var.postgres_namespace
+  namespace        = var.postgres_namespace
 
   values = [yamlencode(
     {
@@ -49,11 +49,11 @@ resource "helm_release" "postgres" {
         },
         resources = {
           requests = {
-            cpu = "100m",
+            cpu    = "100m",
             memory = "256Mi"
           },
           limits = {
-            cpu = "2",
+            cpu    = "2",
             memory = "1024Mi"
           }
         }

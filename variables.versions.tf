@@ -44,5 +44,5 @@ variable "chart_jupyterhub_version" {
   description = "value"
   # default must not be null as this variable will not be used
   # within this tf config but it will be passed through helm!
-  default     = ""
+  default = ""
 }

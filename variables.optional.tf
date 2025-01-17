@@ -582,17 +582,17 @@ variable "jhaas_s3_bucket_jh_specs" {
 # JHaaS Docs
 variable "jhaas_docs_enabled" {
   description = "value"
-  default = true
+  default     = true
 }
 variable "jhaas_docs_image_name" {
   description = "value"
-  default = "harbor.computational.bio.uni-giessen.de/jhaas/user:master"
+  default     = "harbor.computational.bio.uni-giessen.de/jhaas/user:master"
 }
 variable "jhaas_docs_path" {
   description = "value"
-  default = "/docs"
+  default     = "/docs"
 }
 variable "jhaas_docs_address" {
   description = "value"
-  default = null
+  default     = null
 }

@@ -3,8 +3,8 @@
 resource "helm_release" "cert_manager" {
   count = var.deploy_cert_manager == true ? 1 : 0
 
-  name   = var.cm_name
-  atomic = true
+  name            = var.cm_name
+  atomic          = true
   cleanup_on_fail = true
 
   repository = "https://charts.jetstack.io"
@@ -12,7 +12,7 @@ resource "helm_release" "cert_manager" {
   version    = var.chart_certmanager_version
 
   create_namespace = true
-  namespace = var.cm_namespace
+  namespace        = var.cm_namespace
 
   values = [yamlencode(
     {
@@ -22,14 +22,14 @@ resource "helm_release" "cert_manager" {
 }
 
 resource "time_sleep" "wait_cm" {
-  count = var.deploy_cert_manager == true ? 1 : 0
+  count           = var.deploy_cert_manager == true ? 1 : 0
   create_duration = "60s"
 
   depends_on = [helm_release.cert_manager]
 }
 
 resource "kubectl_manifest" "cluster_issuer" {
-  count = var.deploy_cert_manager == true ? 1 : 0
+  count      = var.deploy_cert_manager == true ? 1 : 0
   depends_on = [time_sleep.wait_cm]
 
   validate_schema = false

@@ -7,26 +7,26 @@ variable "kubeconfig" {
 
 variable "deploy_authentik" {
   description = "value"
-  default = true
+  default     = true
 }
 variable "create_authentik_namespace" {
   description = "value"
-  default = true
+  default     = true
 }
 
 variable "chart_authentik_version" {
   description = "value"
-  default = null
+  default     = null
 }
 
 variable "authentik_namespace" {
   description = "value"
-  default = "authentik"
+  default     = "authentik"
 }
 
 variable "authentik_name" {
   description = "value"
-  default = "authentik"
+  default     = "authentik"
 }
 
 variable "authentik_fqdn" {
@@ -38,7 +38,7 @@ variable "authentik_fqdn" {
 ######################
 variable "authentik_log_level" {
   description = "value"
-  default = "info"
+  default     = "info"
 }
 
 variable "authentik_secret" {
@@ -59,7 +59,7 @@ variable "authentik_bootstrap_token" {
 
 variable "authentik_blueprints_override_name" {
   description = "value"
-  default = "authentik-blueprints-override"
+  default     = "authentik-blueprints-override"
 }
 
 ######################
@@ -67,22 +67,22 @@ variable "authentik_blueprints_override_name" {
 ######################
 variable "postgres_host" {
   description = "value"
-  default = "postgres.postgres"
+  default     = "postgres.postgres"
 }
 
 variable "postgres_port" {
   description = "value"
-  default = 5432
+  default     = 5432
 }
 
 variable "authentik_db_name" {
   description = "value"
-  default = "authentik"
+  default     = "authentik"
 }
 
 variable "authentik_db_user" {
   description = "value"
-  default = "authentik"
+  default     = "authentik"
 }
 
 variable "authentik_db_pass" {
@@ -94,7 +94,7 @@ variable "authentik_db_pass" {
 ######################
 variable "redis_host" {
   description = "value"
-  default = "redis.redis"
+  default     = "redis.redis"
 }
 
 variable "redis_pass" {
@@ -107,37 +107,37 @@ variable "redis_pass" {
 
 variable "authentik_mail_host" {
   description = "value"
-  default = ""
+  default     = ""
 }
 
 variable "authentik_mail_port" {
   description = "value"
-  default =  587
+  default     = 587
 }
 
 variable "authentik_mail_use_ssl" {
   description = "value"
-  default = false
+  default     = false
 }
 
 variable "authentik_mail_use_tls" {
   description = "value"
-  default = false
+  default     = false
 }
 
 variable "authentik_mail_username" {
   description = "value"
-  default = ""
+  default     = ""
 }
 
 variable "authentik_mail_password" {
   description = "value"
-  default = ""
+  default     = ""
 }
 
 variable "authentik_mail_from" {
   description = "value"
-  default = ""
+  default     = ""
 }
 
 ######################
@@ -145,5 +145,5 @@ variable "authentik_mail_from" {
 ######################
 variable "cm_issuer" {
   description = "value"
-  default = "cluster-issuer"
+  default     = "cluster-issuer"
 }

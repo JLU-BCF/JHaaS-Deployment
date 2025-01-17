@@ -11,32 +11,32 @@ variable "kubeconfig_hubs" {
 
 variable "cm_issuer" {
   description = "value"
-  default = "cluster-issuer"
+  default     = "cluster-issuer"
 }
 
 variable "cm_issuer_hubs" {
   description = "value"
-  default = "cluster-issuer"
+  default     = "cluster-issuer"
 }
 
 variable "deploy_jhaas" {
   description = "value"
-  default = true
+  default     = true
 }
 
 variable "create_jhaas_namespace" {
   description = "value"
-  default = true
+  default     = true
 }
 
 variable "chart_jhaas_version" {
   description = "value"
-  default = null
+  default     = null
 }
 
 variable "chart_jupyterhub_version" {
   description = "value"
-  default = null
+  default     = null
 }
 
 variable "jhaas_portal_fqdn" {
@@ -45,12 +45,12 @@ variable "jhaas_portal_fqdn" {
 
 variable "jhaas_name" {
   description = "value"
-  default = "jhaas-portal"
+  default     = "jhaas-portal"
 }
 
 variable "jhaas_namespace" {
   description = "value"
-  default = "jhaas-portal"
+  default     = "jhaas-portal"
 }
 
 ###########
@@ -58,15 +58,15 @@ variable "jhaas_namespace" {
 ###########
 variable "image_credentials" {
   description = "{name: string, registry: string, username: string, password: string}[]"
-  default = []
+  default     = []
 }
 variable "backend_image_name" {
   description = "value"
-  default = "harbor.computational.bio.uni-giessen.de/bcf/portal-backend:master"
+  default     = "harbor.computational.bio.uni-giessen.de/bcf/portal-backend:master"
 }
 variable "frontend_image_name" {
   description = "value"
-  default = "harbor.computational.bio.uni-giessen.de/bcf/portal-frontend:master"
+  default     = "harbor.computational.bio.uni-giessen.de/bcf/portal-frontend:master"
 }
 
 ###########
@@ -77,7 +77,7 @@ variable "jhaas_backend_jh_domain" {
 }
 variable "jhaas_k8s_tf_image" {
   description = "value"
-  default = "harbor.computational.bio.uni-giessen.de/jhaas/tf-worker:master"
+  default     = "harbor.computational.bio.uni-giessen.de/jhaas/tf-worker:master"
 }
 variable "jhaas_frontend_url" {
   description = "value"
@@ -90,11 +90,11 @@ variable "jhaas_session_cookie_secret" {
 }
 variable "jhaas_redis_url" {
   description = "value"
-  default = "redis://redis-master.redis"
+  default     = "redis://redis-master.redis"
 }
 variable "jhaas_redis_pass" {
   description = "value"
-  default = null
+  default     = null
 }
 
 ###########
@@ -102,7 +102,7 @@ variable "jhaas_redis_pass" {
 ###########
 variable "jhaas_authentik_name" {
   description = "value"
-  default = "Authentik"
+  default     = "Authentik"
 }
 variable "jhaas_authentik_fqdn" {
   description = "value"
@@ -118,19 +118,19 @@ variable "jhaas_authentik_api_secret" {
 }
 variable "jhaas_authentik_jupyter_hub_group" {
   description = "value"
-  default = "jupyterhubs"
+  default     = "jupyterhubs"
 }
 variable "jhaas_authentik_authentication_flow" {
   description = "jhaas-authentication"
-  default = "jhaas-auth"
+  default     = "jhaas-auth"
 }
 variable "jhaas_authentik_authorization_flow" {
   description = "value"
-  default = "jhaas-consent"
+  default     = "jhaas-consent"
 }
 variable "jhaas_authentik_invalidation_flow" {
   description = "value"
-  default = "jhaas-logout"
+  default     = "jhaas-logout"
 }
 variable "jhaas_authentik_config_totp" {
   description = "value"
@@ -146,7 +146,7 @@ variable "jhaas_authentik_config_password" {
 }
 variable "jhaas_authentik_icon" {
   description = "value"
-  default = "/static/dist/assets/icons/icon.png"
+  default     = "/static/dist/assets/icons/icon.png"
 }
 
 ###########
@@ -157,15 +157,15 @@ variable "jhaas_db_host" {
 }
 variable "jhaas_db_port" {
   description = "value"
-  default = "5432"
+  default     = "5432"
 }
 variable "jhaas_db_name" {
   description = "value"
-  default = "jhaas"
+  default     = "jhaas"
 }
 variable "jhaas_db_user" {
   description = "value"
-  default = "jhaas"
+  default     = "jhaas"
 }
 variable "jhaas_db_pass" {
   description = "value"
@@ -176,15 +176,15 @@ variable "jhaas_db_pass" {
 ###########
 variable "jhaas_mail_host" {
   description = "value"
-  default = ""
+  default     = ""
 }
 variable "jhaas_mail_port" {
   description = "value"
-  default = ""
+  default     = ""
 }
 variable "jhaas_mail_secure" {
   description = "value"
-  default = false
+  default     = false
 }
 variable "jhaas_mail_username" {
   description = "value"
@@ -196,19 +196,19 @@ variable "jhaas_mail_password" {
 }
 variable "jhaas_mail_from" {
   description = "value"
-  default = ""
+  default     = ""
 }
 variable "jhaas_mail_from_name" {
   description = "value"
-  default = ""
+  default     = ""
 }
 variable "jhaas_mail_copy_addresses" {
   description = "value"
-  default = "[]"
+  default     = "[]"
 }
 variable "jhaas_mail_feedback_address" {
   description = "value"
-  default = "feedback@jhaas.local"
+  default     = "feedback@jhaas.local"
 }
 
 ###########
@@ -216,35 +216,35 @@ variable "jhaas_mail_feedback_address" {
 ###########
 variable "jhaas_s3_host" {
   description = "value"
-  default = ""
+  default     = ""
 }
 variable "jhaas_s3_port" {
   description = "value"
-  default = "80"
+  default     = "80"
 }
 variable "jhaas_s3_ssl" {
   description = "value"
-  default = false
+  default     = false
 }
 variable "jhaas_s3_access_key" {
   description = "value"
-  default = ""
+  default     = ""
 }
 variable "jhaas_s3_secret_key" {
   description = "value"
-  default = ""
+  default     = ""
 }
 variable "jhaas_s3_api" {
   description = "value"
-  default = "S3v2"
+  default     = "S3v2"
 }
 variable "jhaas_s3_bucket_tf_state" {
   description = "value"
-  default = "tf-state"
+  default     = "tf-state"
 }
 variable "jhaas_s3_bucket_jh_specs" {
   description = "value"
-  default = "jh-specs"
+  default     = "jh-specs"
 }
 
 ###########

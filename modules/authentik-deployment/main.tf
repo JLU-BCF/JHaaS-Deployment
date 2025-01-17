@@ -139,7 +139,7 @@ resource "helm_release" "authentik" {
       global = {
         env = [
           {
-            name = "AUTHENTIK_REDIS__DB",
+            name  = "AUTHENTIK_REDIS__DB",
             value = "1"
           },
           {
@@ -230,7 +230,7 @@ resource "helm_release" "authentik" {
           paths = [
             "/"
           ],
-          pathType = "Prefix",
+          pathType         = "Prefix",
           ingressClassName = "nginx",
           tls = [
             {
@@ -241,11 +241,11 @@ resource "helm_release" "authentik" {
         },
         resources = {
           requests = {
-            cpu = "100m",
+            cpu    = "100m",
             memory = "512Mi"
           },
           limits = {
-            cpu = "2",
+            cpu    = "2",
             memory = "2048Mi"
           }
         }
@@ -253,11 +253,11 @@ resource "helm_release" "authentik" {
       worker = {
         resources = {
           requests = {
-            cpu = "100m",
+            cpu    = "100m",
             memory = "512Mi"
           },
           limits = {
-            cpu = "2",
+            cpu    = "2",
             memory = "2048Mi"
           }
         }

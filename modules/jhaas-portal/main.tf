@@ -178,7 +178,7 @@ resource "helm_release" "jhaas" {
       docs = {
         enabled = var.jhaas_docs_enabled
         image = {
-          name = var.jhaas_docs_image_name
+          name       = var.jhaas_docs_image_name
           pullPolicy = "IfNotPresent"
         }
         conf = {
