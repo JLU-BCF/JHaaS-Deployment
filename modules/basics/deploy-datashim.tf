@@ -8,7 +8,7 @@ resource "helm_release" "datashim" {
   cleanup_on_fail = true
 
   repository = "https://datashim-io.github.io/datashim"
-  chart      = "datashim"
+  chart      = "datashim-charts"
   version    = var.chart_datashim_version
 
   create_namespace = true
