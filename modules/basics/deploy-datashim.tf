@@ -65,6 +65,7 @@ resource "helm_release" "datashim" {
 
 # Deploy s3 data secret for use with datashim
 resource "kubernetes_secret" "jhaas-s3-data-conf" {
+  count = var.deploy_datashim == true ? 1 : 0
   depends_on = [helm_release.datashim]
 
   metadata {
