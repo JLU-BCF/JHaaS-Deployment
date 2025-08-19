@@ -15,12 +15,12 @@ resource "helm_release" "nfs_provisioner" {
     {
       persistence = {
         enabled = true,
-        size = var.nfs_storage_size
+        size    = var.nfs_storage_size
       },
       storageClass = {
-        create = true,
-        defaultClass = false,
-        name = var.nfs_storageclass_name,
+        create               = true,
+        defaultClass         = false,
+        name                 = var.nfs_storageclass_name,
         allowVolumeExpansion = true
       }
     }
