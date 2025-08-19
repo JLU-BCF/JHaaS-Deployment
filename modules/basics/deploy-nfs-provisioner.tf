@@ -11,6 +11,9 @@ resource "helm_release" "nfs_provisioner" {
   chart      = "nfs-server-provisioner"
   version    = var.chart_nfs_provisioner_version
 
+  create_namespace = true
+  namespace        = var.nfs_provisioner_namespace
+
   values = [yamlencode(
     {
       persistence = {

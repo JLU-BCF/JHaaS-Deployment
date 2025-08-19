@@ -251,6 +251,11 @@ variable "nfs_provisioner_name" {
   default     = "nfs-provisioner"
 }
 
+variable "nfs_provisioner_namespace" {
+  description = "Namespace for nfs provisioner"
+  default     = "nfs-provisioner"
+}
+
 variable "nfs_storage_size" {
   description = "Storage for nfs provisioner"
   default     = "30Gi"

@@ -158,6 +158,7 @@ module "basics" {
   deploy_nfs_provisioner        = var.deploy_nfs_provisioner
   chart_nfs_provisioner_version = var.chart_nfs_provisioner_version
   nfs_provisioner_name          = var.nfs_provisioner_name
+  nfs_provisioner_namespace     = var.nfs_provisioner_namespace
   nfs_storage_size              = var.nfs_storage_size
   nfs_storageclass_name         = var.nfs_storageclass_name
 }
