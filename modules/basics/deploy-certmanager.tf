@@ -16,7 +16,8 @@ resource "helm_release" "cert_manager" {
 
   values = [yamlencode(
     {
-      installCRDs = true
+      installCRDs = true,
+      featureGates = "ACMEHTTP01IngressPathTypeExact=false"
     }
   )]
 }

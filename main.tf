@@ -1,7 +1,7 @@
 provider "helm" {
   # alias  = "helm-basics"
 
-  kubernetes {
+  kubernetes = {
     config_path = var.kubeconfig
   }
 }
