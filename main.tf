@@ -154,6 +154,12 @@ module "basics" {
   jhaas_s3_data_ssl         = var.jhaas_s3_data_ssl
   jhaas_s3_data_access_key  = local.jhaas_s3_data_access_key
   jhaas_s3_data_secret_key  = local.jhaas_s3_data_secret_key
+
+  deploy_nfs_provisioner        = var.deploy_nfs_provisioner
+  chart_nfs_provisioner_version = var.chart_nfs_provisioner_version
+  nfs_provisioner_name          = var.nfs_provisioner_name
+  nfs_storage_size              = var.nfs_storage_size
+  nfs_storageclass_name         = var.nfs_storageclass_name
 }
 
 module "authentik-deployment" {

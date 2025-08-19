@@ -27,6 +27,10 @@ variable "chart_datashim_version" {
   description = "value"
   default     = null
 }
+variable "chart_nfs_provisioner_version" {
+  description = "value"
+  default     = null
+}
 
 # Authentik-Deployment
 variable "chart_authentik_version" {

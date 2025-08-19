@@ -171,6 +171,29 @@ variable "jhaas_s3_data_secret_key" {
 }
 
 ###############
+# NFS PROVISIONER
+###############
+variable "deploy_nfs_provisioner" {
+  description = "Whether to deploy nfs provisioner"
+  default     = true
+}
+
+variable "nfs_provisioner_name" {
+  description = "Name for nfs provisioner"
+  default     = "nfs-provisioner"
+}
+
+variable "nfs_storage_size" {
+  description = "Storage for nfs provisioner"
+  default     = "30Gi"
+}
+
+variable "nfs_storageclass_name" {
+  description = "Name for nfs provisioners storage class"
+  default     = "local-nfs"
+}
+
+###############
 # AUTHENTIK
 ###############
 variable "authentik_kubeconfig" {
