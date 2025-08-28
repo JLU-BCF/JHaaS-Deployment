@@ -307,3 +307,40 @@ variable "jhaas_s3_data_secret_key" {
   description = "value"
   default     = null
 }
+
+variable "portal_http_proxy" {
+  type    = string
+  default = ""
+}
+variable "portal_https_proxy" {
+  type    = string
+  default = ""
+}
+variable "portal_no_proxy" {
+  type    = string
+  default = ""
+}
+variable "tf_runner_http_proxy" {
+  type    = string
+  default = ""
+}
+variable "tf_runner_https_proxy" {
+  type    = string
+  default = ""
+}
+variable "tf_runner_no_proxy" {
+  type    = string
+  default = ""
+}
+variable "notebooks_http_proxy" {
+  type    = string
+  default = ""
+}
+variable "notebooks_https_proxy" {
+  type    = string
+  default = ""
+}
+variable "notebooks_no_proxy" {
+  type    = string
+  default = ""
+}

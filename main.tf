@@ -348,4 +348,16 @@ module "jhaas-portal" {
   jhaas_docs_enabled    = var.jhaas_docs_enabled
   jhaas_docs_image_name = var.jhaas_docs_image_name
   jhaas_docs_path       = var.jhaas_docs_path
+
+  portal_http_proxy  = var.portal_http_proxy
+  portal_https_proxy = var.portal_https_proxy
+  portal_no_proxy    = var.portal_no_proxy
+
+  tf_runner_http_proxy  = var.tf_runner_http_proxy
+  tf_runner_https_proxy = var.tf_runner_https_proxy
+  tf_runner_no_proxy    = var.tf_runner_no_proxy
+
+  notebooks_http_proxy  = var.notebooks_http_proxy
+  notebooks_https_proxy = var.notebooks_https_proxy
+  notebooks_no_proxy    = var.notebooks_no_proxy
 }

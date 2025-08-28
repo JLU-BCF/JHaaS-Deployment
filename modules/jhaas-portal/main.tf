@@ -62,6 +62,23 @@ resource "helm_release" "jhaas" {
         jh_chart_version = var.chart_jupyterhub_version
       }
       imageCredentials = var.image_credentials
+      proxy_settings = {
+        portal = {
+          http_proxy  = var.portal_http_proxy
+          https_proxy = var.portal_https_proxy
+          no_proxy    = var.portal_no_proxy
+        }
+        tf_runner = {
+          http_proxy  = var.tf_runner_http_proxy
+          https_proxy = var.tf_runner_https_proxy
+          no_proxy    = var.tf_runner_no_proxy
+        }
+        notebooks = {
+          http_proxy  = var.notebooks_http_proxy
+          https_proxy = var.notebooks_https_proxy
+          no_proxy    = var.notebooks_no_proxy
+        }
+      }
       backend = {
         image = {
           name       = var.backend_image_name
