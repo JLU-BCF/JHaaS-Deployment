@@ -5,6 +5,8 @@ locals {
 }
 
 resource "kubernetes_persistent_volume_claim" "nfs_provisioner_volume" {
+  count = var.deploy_nfs_provisioner ? 1 : 0
+
   metadata {
     name      = local.nfs_claim_name
     namespace = var.nfs_provisioner_namespace
